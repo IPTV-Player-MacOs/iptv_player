@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:iptv_player/main.dart';
+import 'package:iptv_player/home/home_view.dart';
 
 import '../iptv_list/iptv_server_list.dart';
 
@@ -10,7 +10,10 @@ final router = GoRouter(
       path: '/',
       builder: (context, state) => const IptvServerList(),
       routes: [
-        GoRoute(path: 'main', builder: (context, state) => const MainView()),
+        GoRoute(
+          path: 'main',
+          builder: (context, state) => const HomeView(),
+        ),
       ],
     ),
   ],

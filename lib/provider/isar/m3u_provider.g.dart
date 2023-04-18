@@ -35,4 +35,22 @@ final m3uParseServiceProvider = Provider<M3uParseService>.internal(
 );
 
 typedef M3uParseServiceRef = ProviderRef<M3uParseService>;
+String _$downloadAndPersistActivePlaylistItemsHash() =>
+    r'bfc99e4649fb5594d8a046acc2fd261f80c881e1';
+
+/// See also [downloadAndPersistActivePlaylistItems].
+@ProviderFor(downloadAndPersistActivePlaylistItems)
+final downloadAndPersistActivePlaylistItemsProvider =
+    AutoDisposeFutureProvider<void>.internal(
+  downloadAndPersistActivePlaylistItems,
+  name: r'downloadAndPersistActivePlaylistItemsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$downloadAndPersistActivePlaylistItemsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef DownloadAndPersistActivePlaylistItemsRef
+    = AutoDisposeFutureProviderRef<void>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
