@@ -149,6 +149,7 @@ class IptvServerList extends ConsumerWidget {
                 );
               },
               error: (error) {
+                print(error);
                 return const Center(
                   child: Text('Error...'),
                 );

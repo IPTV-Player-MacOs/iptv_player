@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iptv_player/provider/isar/isar_provider.dart';
@@ -17,8 +16,8 @@ import 'about/about_window.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  final dir = kIsWeb ? null : (await getApplicationSupportDirectory()).path;
-  final isar = await Isar.open(allSchemas, directory: dir);
+  final dir = await getApplicationDocumentsDirectory();
+  final isar = await Isar.open(allSchemas, directory: dir.path);
 
   if (args.firstOrNull == 'multi_window') {
     final windowId = int.parse(args[1]);

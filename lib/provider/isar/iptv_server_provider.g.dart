@@ -37,4 +37,20 @@ final iptvServerItemsProvider =
 );
 
 typedef IptvServerItemsRef = AutoDisposeStreamProviderRef<List<IptvServer>>;
+String _$activeIptvServerHash() => r'00eb04d49b21532e71faae8cd5b0fadddc8d3544';
+
+/// See also [activeIptvServer].
+@ProviderFor(activeIptvServer)
+final activeIptvServerProvider =
+    AutoDisposeStreamProvider<IptvServer?>.internal(
+  activeIptvServer,
+  name: r'activeIptvServerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$activeIptvServerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef ActiveIptvServerRef = AutoDisposeStreamProviderRef<IptvServer?>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

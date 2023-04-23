@@ -1,4 +1,5 @@
-import 'package:iptv_player/service/collections/iptv_server/iptv_server.dart';
+import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
+import 'package:iptv_player/service/collections/m3u/m3u_item.dart';
 import 'package:iptv_player/service/m3u_parse_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -20,10 +21,31 @@ M3uParseService m3uParseService(M3uParseServiceRef ref) {
 }
 
 @riverpod
-Future<void> downloadAndPersistActivePlaylistItems(
-    DownloadAndPersistActivePlaylistItemsRef ref) {
-  final activeIptvServer = ref.watch(m3uServiceProvider).getActiveIptvServer();
-  return ref
-      .watch(m3uParseServiceProvider)
-      .downloadAndPersist(activeIptvServer!);
+Future<void> clearDownloadAndPersistActivePlaylistItems(
+  ClearDownloadAndPersistActivePlaylistItemsRef ref, {
+  bool? forced,
+}) async {
+  final m3uService = ref.watch(m3uServiceProvider);
+  final iptvService = ref.watch(iptvServerServiceProvider);
+  final activeIptvServer = m3uService.getActiveIptvServer()!;
+
+  final date24HoursAgo = DateTime.now().subtract(
+    const Duration(days: 1),
+  );
+
+  if (forced == true ||
+      activeIptvServer.lastSync == null ||
+      activeIptvServer.lastSync!.isBefore(date24HoursAgo)) {
+    await m3uService.clear();
+    await ref
+        .watch(m3uParseServiceProvider)
+        .downloadAndPersist(activeIptvServer);
+    await iptvService.setLastSyncDate(activeIptvServer);
+  }
+}
+
+@riverpod
+Stream<List<M3UItem>> findAllMovies(FindAllMoviesRef ref) {
+  final m3uService = ref.watch(m3uServiceProvider);
+  return m3uService.findAllMovies();
 }

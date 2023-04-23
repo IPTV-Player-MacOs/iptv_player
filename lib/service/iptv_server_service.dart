@@ -35,4 +35,9 @@ class IptvServerService {
       return await isarService.isar.iptvServers.delete(id);
     });
   }
+
+  Future<Id> setLastSyncDate(IptvServer server) async {
+    server.lastSync = DateTime.now();
+    return await put(server);
+  }
 }

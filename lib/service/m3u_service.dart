@@ -19,12 +19,19 @@ class M3uService {
   }
 
   Future<List<M3UItem>> findAll(Isar isar, IptvServer iptvServer) async {
-    //var freeTv = await isar.m3UItems.where().groupTitleEqualTo("Free-TV").findAll();
     return await isar.m3UItems.filter().iptvServer((q) {
       return q.idEqualTo(iptvServer.id);
     }).findAll();
-    //return await isar.m3UItems.where().groupTitleEqualTo("Free-TV").findAll();
-    //return await isar.m3UItems.filter().titleEqualTo("DE: ZDF HD").findAll();
+  }
+
+  Stream<List<M3UItem>> findAllMovies() {
+    return isarService.isar.m3UItems
+        .filter()
+        .iptvServer((q) {
+          return q.idEqualTo(_activeIptvServer!.id);
+        })
+        .nameEqualTo(M3UType.movie)
+        .watch(fireImmediately: true);
   }
 
   Future<List<M3UItem>> findByCategory(String category) async {
@@ -53,6 +60,14 @@ class M3uService {
   Future<bool> delete(Id id) async {
     return await isarService.isar.writeTxn(() async {
       return await isarService.isar.m3UItems.delete(id);
+    });
+  }
+
+  Future<int> clear() async {
+    return await isarService.isar.writeTxn(() async {
+      return await isarService.isar.m3UItems.filter().iptvServer((q) {
+        return q.idEqualTo(_activeIptvServer!.id);
+      }).deleteAll();
     });
   }
 }

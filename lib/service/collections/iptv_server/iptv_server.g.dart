@@ -17,13 +17,18 @@ const IptvServerSchema = CollectionSchema(
   name: r'IptvServer',
   id: -4870833823308418905,
   properties: {
-    r'name': PropertySchema(
+    r'lastSync': PropertySchema(
       id: 0,
+      name: r'lastSync',
+      type: IsarType.dateTime,
+    ),
+    r'name': PropertySchema(
+      id: 1,
       name: r'name',
       type: IsarType.string,
     ),
     r'url': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'url',
       type: IsarType.string,
     )
@@ -59,8 +64,9 @@ void _iptvServerSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.name);
-  writer.writeString(offsets[1], object.url);
+  writer.writeDateTime(offsets[0], object.lastSync);
+  writer.writeString(offsets[1], object.name);
+  writer.writeString(offsets[2], object.url);
 }
 
 IptvServer _iptvServerDeserialize(
@@ -70,9 +76,10 @@ IptvServer _iptvServerDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = IptvServer(
-    reader.readString(offsets[0]),
     reader.readString(offsets[1]),
+    reader.readString(offsets[2]),
     id: id,
+    lastSync: reader.readDateTimeOrNull(offsets[0]),
   );
   return object;
 }
@@ -85,8 +92,10 @@ P _iptvServerDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 1:
+      return (reader.readString(offset)) as P;
+    case 2:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -229,6 +238,77 @@ extension IptvServerQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<IptvServer, IptvServer, QAfterFilterCondition> lastSyncIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'lastSync',
+      ));
+    });
+  }
+
+  QueryBuilder<IptvServer, IptvServer, QAfterFilterCondition>
+      lastSyncIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'lastSync',
+      ));
+    });
+  }
+
+  QueryBuilder<IptvServer, IptvServer, QAfterFilterCondition> lastSyncEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lastSync',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IptvServer, IptvServer, QAfterFilterCondition>
+      lastSyncGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lastSync',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IptvServer, IptvServer, QAfterFilterCondition> lastSyncLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lastSync',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<IptvServer, IptvServer, QAfterFilterCondition> lastSyncBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lastSync',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -506,6 +586,18 @@ extension IptvServerQueryLinks
 
 extension IptvServerQuerySortBy
     on QueryBuilder<IptvServer, IptvServer, QSortBy> {
+  QueryBuilder<IptvServer, IptvServer, QAfterSortBy> sortByLastSync() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastSync', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IptvServer, IptvServer, QAfterSortBy> sortByLastSyncDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastSync', Sort.desc);
+    });
+  }
+
   QueryBuilder<IptvServer, IptvServer, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -545,6 +637,18 @@ extension IptvServerQuerySortThenBy
     });
   }
 
+  QueryBuilder<IptvServer, IptvServer, QAfterSortBy> thenByLastSync() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastSync', Sort.asc);
+    });
+  }
+
+  QueryBuilder<IptvServer, IptvServer, QAfterSortBy> thenByLastSyncDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastSync', Sort.desc);
+    });
+  }
+
   QueryBuilder<IptvServer, IptvServer, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -572,6 +676,12 @@ extension IptvServerQuerySortThenBy
 
 extension IptvServerQueryWhereDistinct
     on QueryBuilder<IptvServer, IptvServer, QDistinct> {
+  QueryBuilder<IptvServer, IptvServer, QDistinct> distinctByLastSync() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lastSync');
+    });
+  }
+
   QueryBuilder<IptvServer, IptvServer, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -592,6 +702,12 @@ extension IptvServerQueryProperty
   QueryBuilder<IptvServer, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<IptvServer, DateTime?, QQueryOperations> lastSyncProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastSync');
     });
   }
 

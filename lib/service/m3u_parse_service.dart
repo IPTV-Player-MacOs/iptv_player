@@ -10,9 +10,10 @@ class M3uParseService {
 
   final IsarService isarService;
 
-  Future<void> downloadAndPersist(IptvServer iptvServer) async {
+  Future<IptvServer> downloadAndPersist(IptvServer iptvServer) async {
     final playlist = await download(iptvServer.url);
     persist(playlist, iptvServer);
+    return iptvServer;
   }
 
   Future<M3uList> download(String link) async {

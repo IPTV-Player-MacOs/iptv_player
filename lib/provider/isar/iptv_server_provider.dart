@@ -1,3 +1,4 @@
+import 'package:iptv_player/provider/isar/m3u_provider.dart';
 import 'package:iptv_player/service/collections/iptv_server/iptv_server.dart';
 import 'package:iptv_player/service/iptv_server_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,4 +16,10 @@ IptvServerService iptvServerService(IptvServerServiceRef ref) {
 @riverpod
 Stream<List<IptvServer>> iptvServerItems(IptvServerItemsRef ref) {
   return ref.watch(iptvServerServiceProvider).findAllStream();
+}
+
+@riverpod
+Stream<IptvServer?> activeIptvServer(ActiveIptvServerRef ref) {
+  final activeServer = ref.watch(m3uServiceProvider).getActiveIptvServer();
+  return ref.watch(iptvServerServiceProvider).findByIdStream(activeServer!.id);
 }

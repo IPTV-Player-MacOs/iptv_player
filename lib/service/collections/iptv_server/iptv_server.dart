@@ -10,5 +10,12 @@ class IptvServer {
 
   String url;
 
-  IptvServer(this.name, this.url, {this.id = Isar.autoIncrement});
+  DateTime? lastSync;
+
+  IptvServer(
+    this.name,
+    this.url, {
+    this.id = Isar.autoIncrement,
+    this.lastSync,
+  });
 }
