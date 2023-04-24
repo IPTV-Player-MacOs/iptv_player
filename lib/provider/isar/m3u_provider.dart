@@ -21,7 +21,7 @@ M3uParseService m3uParseService(M3uParseServiceRef ref) {
 }
 
 @riverpod
-Future<void> clearDownloadAndPersistActivePlaylistItems(
+Future<bool> clearDownloadAndPersistActivePlaylistItems(
   ClearDownloadAndPersistActivePlaylistItemsRef ref, {
   bool? forced,
 }) async {
@@ -42,10 +42,23 @@ Future<void> clearDownloadAndPersistActivePlaylistItems(
         .downloadAndPersist(activeIptvServer);
     await iptvService.setLastSyncDate(activeIptvServer);
   }
+  return true;
 }
 
 @riverpod
 Stream<List<M3UItem>> findAllMovies(FindAllMoviesRef ref) {
   final m3uService = ref.watch(m3uServiceProvider);
   return m3uService.findAllMovies();
+}
+
+@riverpod
+Stream<List<M3UItem>> findAllSeries(FindAllSeriesRef ref) {
+  final m3uService = ref.watch(m3uServiceProvider);
+  return m3uService.findAllSeries();
+}
+
+@riverpod
+Stream<List<M3UItem>> findAllChannels(FindAllChannelsRef ref) {
+  final m3uService = ref.watch(m3uServiceProvider);
+  return m3uService.findAllChannels();
 }

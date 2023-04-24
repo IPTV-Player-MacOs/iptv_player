@@ -34,6 +34,26 @@ class M3uService {
         .watch(fireImmediately: true);
   }
 
+  Stream<List<M3UItem>> findAllSeries() {
+    return isarService.isar.m3UItems
+        .filter()
+        .iptvServer((q) {
+          return q.idEqualTo(_activeIptvServer!.id);
+        })
+        .nameEqualTo(M3UType.series)
+        .watch(fireImmediately: true);
+  }
+
+  Stream<List<M3UItem>> findAllChannels() {
+    return isarService.isar.m3UItems
+        .filter()
+        .iptvServer((q) {
+          return q.idEqualTo(_activeIptvServer!.id);
+        })
+        .nameEqualTo(M3UType.channel)
+        .watch(fireImmediately: true);
+  }
+
   Future<List<M3UItem>> findByCategory(String category) async {
     return await isarService.isar.m3UItems
         .where()

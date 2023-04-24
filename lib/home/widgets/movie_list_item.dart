@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:iptv_player/service/collections/m3u/m3u_item.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class MovieListItem extends StatelessWidget {
-  const MovieListItem(this.movie, {required this.height, super.key});
+class M3uListItem extends StatelessWidget {
+  const M3uListItem(this.m3uItem, {required this.height, super.key});
 
-  final M3UItem movie;
+  final M3UItem m3uItem;
   final double height;
 
   @override
@@ -15,7 +15,8 @@ class MovieListItem extends StatelessWidget {
       children: [
         Expanded(
           child: CachedNetworkImage(
-            imageUrl: movie.attributes?.tvgLogo ?? "",
+            imageUrl:
+                m3uItem.attributes?.tvgLogo ?? "https://placehold.co/600x400",
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 Center(
               child: ProgressBar(value: downloadProgress.progress ?? 0),
@@ -27,7 +28,7 @@ class MovieListItem extends StatelessWidget {
         SizedBox(
           height: 30,
           child: Text(
-            movie.title ?? "",
+            m3uItem.title ?? "",
             style: MacosTheme.of(context).typography.body,
           ),
         )

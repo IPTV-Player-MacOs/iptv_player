@@ -28,24 +28,34 @@ const M3UItemSchema = CollectionSchema(
       name: r'duration',
       type: IsarType.long,
     ),
-    r'groupTitle': PropertySchema(
+    r'episode': PropertySchema(
       id: 2,
+      name: r'episode',
+      type: IsarType.string,
+    ),
+    r'groupTitle': PropertySchema(
+      id: 3,
       name: r'groupTitle',
       type: IsarType.string,
     ),
     r'link': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'link',
       type: IsarType.string,
     ),
     r'name': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'name',
       type: IsarType.byte,
       enumMap: _M3UItemnameEnumValueMap,
     ),
+    r'season': PropertySchema(
+      id: 6,
+      name: r'season',
+      type: IsarType.string,
+    ),
     r'title': PropertySchema(
-      id: 5,
+      id: 7,
       name: r'title',
       type: IsarType.string,
     )
@@ -100,12 +110,24 @@ int _m3UItemEstimateSize(
     }
   }
   {
+    final value = object.episode;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
     final value = object.groupTitle;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
   bytesCount += 3 + object.link.length * 3;
+  {
+    final value = object.season;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   {
     final value = object.title;
     if (value != null) {
@@ -128,10 +150,12 @@ void _m3UItemSerialize(
     object.attributes,
   );
   writer.writeLong(offsets[1], object.duration);
-  writer.writeString(offsets[2], object.groupTitle);
-  writer.writeString(offsets[3], object.link);
-  writer.writeByte(offsets[4], object.name.index);
-  writer.writeString(offsets[5], object.title);
+  writer.writeString(offsets[2], object.episode);
+  writer.writeString(offsets[3], object.groupTitle);
+  writer.writeString(offsets[4], object.link);
+  writer.writeByte(offsets[5], object.name.index);
+  writer.writeString(offsets[6], object.season);
+  writer.writeString(offsets[7], object.title);
 }
 
 M3UItem _m3UItemDeserialize(
@@ -141,17 +165,19 @@ M3UItem _m3UItemDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = M3UItem(
-    reader.readString(offsets[3]),
+    reader.readString(offsets[4]),
     reader.readLongOrNull(offsets[1]),
-    reader.readStringOrNull(offsets[5]),
-    reader.readStringOrNull(offsets[2]),
+    reader.readStringOrNull(offsets[7]),
+    reader.readStringOrNull(offsets[3]),
     reader.readObjectOrNull<Attributes>(
       offsets[0],
       AttributesSchema.deserialize,
       allOffsets,
     ),
-    _M3UItemnameValueEnumMap[reader.readByteOrNull(offsets[4])] ??
+    _M3UItemnameValueEnumMap[reader.readByteOrNull(offsets[5])] ??
         M3UType.movie,
+    reader.readStringOrNull(offsets[6]),
+    reader.readStringOrNull(offsets[2]),
   );
   object.id = id;
   return object;
@@ -175,11 +201,15 @@ P _m3UItemDeserializeProp<P>(
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
       return (_M3UItemnameValueEnumMap[reader.readByteOrNull(offset)] ??
           M3UType.movie) as P;
-    case 5:
+    case 6:
+      return (reader.readStringOrNull(offset)) as P;
+    case 7:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -434,6 +464,152 @@ extension M3UItemQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'episode',
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'episode',
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'episode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'episode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'episode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'episode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'episode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'episode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'episode',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'episode',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'episode',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> episodeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'episode',
+        value: '',
       ));
     });
   }
@@ -819,6 +995,152 @@ extension M3UItemQueryFilter
     });
   }
 
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'season',
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'season',
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'season',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'season',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'season',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'season',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'season',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'season',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'season',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'season',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'season',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seasonIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'season',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> titleIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1005,6 +1327,18 @@ extension M3UItemQuerySortBy on QueryBuilder<M3UItem, M3UItem, QSortBy> {
     });
   }
 
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> sortByEpisode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'episode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> sortByEpisodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'episode', Sort.desc);
+    });
+  }
+
   QueryBuilder<M3UItem, M3UItem, QAfterSortBy> sortByGroupTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'groupTitle', Sort.asc);
@@ -1041,6 +1375,18 @@ extension M3UItemQuerySortBy on QueryBuilder<M3UItem, M3UItem, QSortBy> {
     });
   }
 
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> sortBySeason() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'season', Sort.asc);
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> sortBySeasonDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'season', Sort.desc);
+    });
+  }
+
   QueryBuilder<M3UItem, M3UItem, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1065,6 +1411,18 @@ extension M3UItemQuerySortThenBy
   QueryBuilder<M3UItem, M3UItem, QAfterSortBy> thenByDurationDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'duration', Sort.desc);
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> thenByEpisode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'episode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> thenByEpisodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'episode', Sort.desc);
     });
   }
 
@@ -1116,6 +1474,18 @@ extension M3UItemQuerySortThenBy
     });
   }
 
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> thenBySeason() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'season', Sort.asc);
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> thenBySeasonDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'season', Sort.desc);
+    });
+  }
+
   QueryBuilder<M3UItem, M3UItem, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1137,6 +1507,13 @@ extension M3UItemQueryWhereDistinct
     });
   }
 
+  QueryBuilder<M3UItem, M3UItem, QDistinct> distinctByEpisode(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'episode', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<M3UItem, M3UItem, QDistinct> distinctByGroupTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1154,6 +1531,13 @@ extension M3UItemQueryWhereDistinct
   QueryBuilder<M3UItem, M3UItem, QDistinct> distinctByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name');
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QDistinct> distinctBySeason(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'season', caseSensitive: caseSensitive);
     });
   }
 
@@ -1185,6 +1569,12 @@ extension M3UItemQueryProperty
     });
   }
 
+  QueryBuilder<M3UItem, String?, QQueryOperations> episodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'episode');
+    });
+  }
+
   QueryBuilder<M3UItem, String?, QQueryOperations> groupTitleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'groupTitle');
@@ -1200,6 +1590,12 @@ extension M3UItemQueryProperty
   QueryBuilder<M3UItem, M3UType, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<M3UItem, String?, QQueryOperations> seasonProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'season');
     });
   }
 

@@ -6,7 +6,7 @@ part of 'iptv_server_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$iptvServerServiceHash() => r'2ca957c4128c58cc914c53e0cc3f1c5500cb355b';
+String _$iptvServerServiceHash() => r'7a34bec0cf626cedb1b0ecc2d5fd8f5168059e4f';
 
 /// See also [iptvServerService].
 @ProviderFor(iptvServerService)
@@ -53,4 +53,21 @@ final activeIptvServerProvider =
 );
 
 typedef ActiveIptvServerRef = AutoDisposeStreamProviderRef<IptvServer?>;
+String _$isUpdatingActiveIptvServerHash() =>
+    r'64d772d0417c2c88b50d65f1623e3869b0443852';
+
+/// See also [IsUpdatingActiveIptvServer].
+@ProviderFor(IsUpdatingActiveIptvServer)
+final isUpdatingActiveIptvServerProvider =
+    AutoDisposeNotifierProvider<IsUpdatingActiveIptvServer, bool>.internal(
+  IsUpdatingActiveIptvServer.new,
+  name: r'isUpdatingActiveIptvServerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$isUpdatingActiveIptvServerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$IsUpdatingActiveIptvServer = AutoDisposeNotifier<bool>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

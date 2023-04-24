@@ -36,7 +36,7 @@ final m3uParseServiceProvider = Provider<M3uParseService>.internal(
 
 typedef M3uParseServiceRef = ProviderRef<M3uParseService>;
 String _$clearDownloadAndPersistActivePlaylistItemsHash() =>
-    r'635fee29c771c8650f4bc7f2005b5474783bae1a';
+    r'c8d2b7400af53386464cece9dc355a685a2aed30';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -60,7 +60,7 @@ class _SystemHash {
 }
 
 typedef ClearDownloadAndPersistActivePlaylistItemsRef
-    = AutoDisposeFutureProviderRef<void>;
+    = AutoDisposeFutureProviderRef<bool>;
 
 /// See also [clearDownloadAndPersistActivePlaylistItems].
 @ProviderFor(clearDownloadAndPersistActivePlaylistItems)
@@ -69,7 +69,7 @@ const clearDownloadAndPersistActivePlaylistItemsProvider =
 
 /// See also [clearDownloadAndPersistActivePlaylistItems].
 class ClearDownloadAndPersistActivePlaylistItemsFamily
-    extends Family<AsyncValue<void>> {
+    extends Family<AsyncValue<bool>> {
   /// See also [clearDownloadAndPersistActivePlaylistItems].
   const ClearDownloadAndPersistActivePlaylistItemsFamily();
 
@@ -108,7 +108,7 @@ class ClearDownloadAndPersistActivePlaylistItemsFamily
 
 /// See also [clearDownloadAndPersistActivePlaylistItems].
 class ClearDownloadAndPersistActivePlaylistItemsProvider
-    extends AutoDisposeFutureProvider<void> {
+    extends AutoDisposeFutureProvider<bool> {
   /// See also [clearDownloadAndPersistActivePlaylistItems].
   ClearDownloadAndPersistActivePlaylistItemsProvider({
     this.forced,
@@ -162,4 +162,35 @@ final findAllMoviesProvider = AutoDisposeStreamProvider<List<M3UItem>>.internal(
 );
 
 typedef FindAllMoviesRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
+String _$findAllSeriesHash() => r'7be2c5a3a4e4603f49debd771f0db2643178f16b';
+
+/// See also [findAllSeries].
+@ProviderFor(findAllSeries)
+final findAllSeriesProvider = AutoDisposeStreamProvider<List<M3UItem>>.internal(
+  findAllSeries,
+  name: r'findAllSeriesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$findAllSeriesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef FindAllSeriesRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
+String _$findAllChannelsHash() => r'47cd22279dea2d488d8ac142f9fcc91851b0886e';
+
+/// See also [findAllChannels].
+@ProviderFor(findAllChannels)
+final findAllChannelsProvider =
+    AutoDisposeStreamProvider<List<M3UItem>>.internal(
+  findAllChannels,
+  name: r'findAllChannelsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$findAllChannelsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef FindAllChannelsRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

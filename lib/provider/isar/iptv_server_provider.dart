@@ -9,8 +9,10 @@ part 'iptv_server_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 IptvServerService iptvServerService(IptvServerServiceRef ref) {
-  final isar = ref.read(getIsarProvider);
-  return IptvServerService(isar);
+  final isar = ref.watch(getIsarProvider);
+  final m3uService = ref.watch(m3uServiceProvider);
+  final m3uParseService = ref.watch(m3uParseServiceProvider);
+  return IptvServerService(isar, m3uService, m3uParseService);
 }
 
 @riverpod
@@ -22,4 +24,16 @@ Stream<List<IptvServer>> iptvServerItems(IptvServerItemsRef ref) {
 Stream<IptvServer?> activeIptvServer(ActiveIptvServerRef ref) {
   final activeServer = ref.watch(m3uServiceProvider).getActiveIptvServer();
   return ref.watch(iptvServerServiceProvider).findByIdStream(activeServer!.id);
+}
+
+@riverpod
+class IsUpdatingActiveIptvServer extends _$IsUpdatingActiveIptvServer {
+  @override
+  bool build() {
+    return false;
+  }
+
+  void toggle() {
+    state = !state;
+  }
 }

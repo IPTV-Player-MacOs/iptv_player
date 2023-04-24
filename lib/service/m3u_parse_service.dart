@@ -31,18 +31,30 @@ class M3uParseService {
           var tvgName = e.attributes['tvg-name'];
           var tvgLogo = e.attributes['tvg-logo'];
           var groupTitle = e.attributes['group-title'];
-
+          var season;
+          var episode;
+          var title = e.title;
           M3UType category = M3UType.channel;
           if (e.link.contains('movie')) {
             category = M3UType.movie;
           } else if (e.link.contains('series')) {
             category = M3UType.series;
+
+            RegExp exp = RegExp(r"S(\d+)E(\d+)");
+            Iterable<Match> matches = exp.allMatches(e.title);
+            for (Match m in matches) {
+              season = m.group(1);
+              episode = m.group(2);
+            }
+
+            RegExp exp2 = RegExp(r"\s*S\d+E\d+");
+            title = e.title.replaceAll(exp2, "");
           }
 
           return M3UItem(
             e.link,
             e.duration,
-            e.title,
+            title,
             e.groupTitle,
             Attributes(
                 timeShift: timeShift,
@@ -51,6 +63,8 @@ class M3uParseService {
                 tvgLogo: tvgLogo,
                 groupTitle: groupTitle),
             category,
+            season,
+            episode,
           )..iptvServer.value = iptvServer;
         }).toList(),
         saveLinks: true,

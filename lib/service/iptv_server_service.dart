@@ -1,11 +1,15 @@
 import 'package:iptv_player/provider/isar/isar_provider.dart';
 import 'package:iptv_player/service/collections/iptv_server/iptv_server.dart';
+import 'package:iptv_player/service/m3u_parse_service.dart';
+import 'package:iptv_player/service/m3u_service.dart';
 import 'package:isar/isar.dart';
 
 class IptvServerService {
-  IptvServerService(this.isarService);
+  IptvServerService(this.isarService, this.m3uService, this.m3uParseService);
 
   final IsarService isarService;
+  final M3uService m3uService;
+  final M3uParseService m3uParseService;
 
   Future<List<IptvServer>> findAll() async {
     var items = await isarService.isar.iptvServers.where().findAll();
@@ -39,5 +43,20 @@ class IptvServerService {
   Future<Id> setLastSyncDate(IptvServer server) async {
     server.lastSync = DateTime.now();
     return await put(server);
+  }
+
+  Future<void> refreshServerItems({bool? forced}) async {
+    final activeIptvServer = m3uService.getActiveIptvServer()!;
+    final date24HoursAgo = DateTime.now().subtract(
+      const Duration(days: 1),
+    );
+    if (forced == true ||
+        activeIptvServer.lastSync == null ||
+        activeIptvServer.lastSync!.isBefore(date24HoursAgo)) {
+      await m3uService.clear();
+      await m3uParseService
+          .downloadAndPersist(activeIptvServer);
+      await setLastSyncDate(activeIptvServer);
+    }
   }
 }

@@ -5,8 +5,8 @@ import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
 import 'package:iptv_player/provider/isar/m3u_provider.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class MoviesPage extends ConsumerWidget {
-  const MoviesPage({super.key});
+class ChannelsPage extends ConsumerWidget {
+  const ChannelsPage({super.key});
 
   int calculateCrossAxisCount(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -23,23 +23,23 @@ class MoviesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final movieProvider = ref.watch(findAllMoviesProvider);
+    final seriesProvider = ref.watch(findAllChannelsProvider);
 
     return MacosScaffold(
       toolBar: const ToolBar(
-        title: Text('Home'),
+        title: Text('Channels'),
       ),
       children: [
         ContentArea(
           builder: (context, scrollController) {
             final isUpdating = ref.watch(isUpdatingActiveIptvServerProvider);
             if (!isUpdating) {
-              return movieProvider.map(
+              return seriesProvider.map(
                 data: (moviesObj) {
                   final movies = moviesObj.value;
                   if (movies.isNotEmpty) {
                     var size = MediaQuery.of(context).size;
-                    final double itemHeight = (size.height) / 0.75;
+                    final double itemHeight = (size.height) / 1.5;
                     final double itemWidth = size.width / 2;
 
                     return GridView.builder(
