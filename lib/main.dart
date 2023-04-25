@@ -15,10 +15,6 @@ import 'package:path_provider/path_provider.dart';
 import 'about/about_window.dart';
 
 Future<void> main(List<String> args) async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final dir = await getApplicationDocumentsDirectory();
-  final isar = await Isar.open(allSchemas, directory: dir.path);
-
   if (args.firstOrNull == 'multi_window') {
     final windowId = int.parse(args[1]);
     final arguments = args[2].isEmpty
@@ -33,6 +29,9 @@ Future<void> main(List<String> args) async {
       ),
     );
   } else {
+    WidgetsFlutterBinding.ensureInitialized();
+    final dir = await getApplicationDocumentsDirectory();
+    final isar = await Isar.open(allSchemas, directory: dir.path);
     runApp(
       ProviderScope(
         child: App(
