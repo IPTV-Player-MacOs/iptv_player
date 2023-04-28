@@ -33,7 +33,7 @@ class M3uParseService {
           var groupTitle = e.attributes['group-title'];
           var season;
           var episode;
-          var title = e.title;
+          var series;
           M3UType category = M3UType.channel;
           if (e.link.contains('movie')) {
             category = M3UType.movie;
@@ -48,13 +48,14 @@ class M3uParseService {
             }
 
             RegExp exp2 = RegExp(r"\s*S\d+E\d+");
-            title = e.title.replaceAll(exp2, "");
+            series = e.title.replaceAll(exp2, "");
           }
 
           return M3UItem(
             e.link,
             e.duration,
-            title,
+            e.title,
+            series,
             e.groupTitle,
             Attributes(
                 timeShift: timeShift,

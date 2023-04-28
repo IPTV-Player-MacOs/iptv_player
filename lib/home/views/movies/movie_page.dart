@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart' hide OverlayVisibilityMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iptv_player/home/views/search_value_provider.dart';
+import 'package:iptv_player/home/provider/search_value_provider.dart';
 import 'package:iptv_player/home/widgets/movie_list_item.dart';
 import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
 import 'package:iptv_player/provider/isar/m3u_provider.dart';

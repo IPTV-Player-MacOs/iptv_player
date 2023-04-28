@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:iptv_player/home/views/channels_page.dart';
-import 'package:iptv_player/home/views/movie_page.dart';
-import 'package:iptv_player/home/views/series_page.dart';
+import 'package:iptv_player/home/views/channels/channels_page.dart';
+import 'package:iptv_player/home/views/movies/movie_page.dart';
+import 'package:iptv_player/home/views/series/series_page.dart';
 import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
 import 'package:macos_ui/macos_ui.dart';
 
@@ -84,6 +84,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ),
                 builder: (context, scrollController) {
                   return SidebarItems(
+                    scrollController: scrollController,
                     currentIndex: _pageIndex,
                     onChanged: (index) {
                       setState(() => _pageIndex = index);

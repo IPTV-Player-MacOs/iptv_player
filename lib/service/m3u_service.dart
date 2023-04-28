@@ -38,18 +38,40 @@ class M3uService {
         .watch(fireImmediately: true);
   }
 
-  Stream<List<M3UItem>> findAllSeries(String? searchValue) {
-    QueryBuilder<M3UItem, M3UItem, QFilterCondition> query =
-        isarService.isar.m3UItems.filter();
-    if (searchValue != null && searchValue.isNotEmpty) {
-      query = query.titleContains(searchValue, caseSensitive: false);
-    }
-    return query
-        .iptvServer((q) {
-          return q.idEqualTo(_activeIptvServer!.id);
-        })
-        .nameEqualTo(M3UType.series)
+  Stream<List<M3UItem>> findAllItemsOfSeriesAndSeason(
+      String series, String season) {
+    return isarService.isar.m3UItems
+        .filter()
+        .seriesEqualTo(series)
+        .seasonEqualTo(season)
         .watch(fireImmediately: true);
+  }
+
+  Stream<List<M3UItem>> findAllSeasonsOfSeries(String series) {
+    return isarService.isar.m3UItems
+        .where(distinct: true)
+        .filter()
+        .seriesEqualTo(series)
+        .distinctBySeason()
+        .watch(fireImmediately: true);
+  }
+
+  Stream<List<M3UItem>> findAllSeries(String? searchValue) {
+    if (searchValue != null && searchValue.isNotEmpty) {
+      return isarService.isar.m3UItems
+          .where(distinct: true)
+          .filter()
+          .seriesContains(searchValue, caseSensitive: false)
+          .sortBySeries()
+          .distinctBySeries()
+          .watch(fireImmediately: true);
+    } else {
+      return isarService.isar.m3UItems
+          .where(distinct: true)
+          .sortBySeries()
+          .distinctBySeries()
+          .watch(fireImmediately: true);
+    }
   }
 
   Stream<List<M3UItem>> findAllChannels(String? searchValue) {

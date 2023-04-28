@@ -54,8 +54,13 @@ const M3UItemSchema = CollectionSchema(
       name: r'season',
       type: IsarType.string,
     ),
-    r'title': PropertySchema(
+    r'series': PropertySchema(
       id: 7,
+      name: r'series',
+      type: IsarType.string,
+    ),
+    r'title': PropertySchema(
+      id: 8,
       name: r'title',
       type: IsarType.string,
     )
@@ -66,6 +71,19 @@ const M3UItemSchema = CollectionSchema(
   deserializeProp: _m3UItemDeserializeProp,
   idName: r'id',
   indexes: {
+    r'series': IndexSchema(
+      id: -1686310176374756610,
+      name: r'series',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'series',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
     r'groupTitle': IndexSchema(
       id: -4459833654924190251,
       name: r'groupTitle',
@@ -129,6 +147,12 @@ int _m3UItemEstimateSize(
     }
   }
   {
+    final value = object.series;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
     final value = object.title;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -155,7 +179,8 @@ void _m3UItemSerialize(
   writer.writeString(offsets[4], object.link);
   writer.writeByte(offsets[5], object.name.index);
   writer.writeString(offsets[6], object.season);
-  writer.writeString(offsets[7], object.title);
+  writer.writeString(offsets[7], object.series);
+  writer.writeString(offsets[8], object.title);
 }
 
 M3UItem _m3UItemDeserialize(
@@ -167,6 +192,7 @@ M3UItem _m3UItemDeserialize(
   final object = M3UItem(
     reader.readString(offsets[4]),
     reader.readLongOrNull(offsets[1]),
+    reader.readStringOrNull(offsets[8]),
     reader.readStringOrNull(offsets[7]),
     reader.readStringOrNull(offsets[3]),
     reader.readObjectOrNull<Attributes>(
@@ -210,6 +236,8 @@ P _m3UItemDeserializeProp<P>(
     case 6:
       return (reader.readStringOrNull(offset)) as P;
     case 7:
+      return (reader.readStringOrNull(offset)) as P;
+    case 8:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -312,6 +340,71 @@ extension M3UItemQueryWhere on QueryBuilder<M3UItem, M3UItem, QWhereClause> {
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterWhereClause> seriesIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'series',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterWhereClause> seriesIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'series',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterWhereClause> seriesEqualTo(
+      String? series) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'series',
+        value: [series],
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterWhereClause> seriesNotEqualTo(
+      String? series) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'series',
+              lower: [],
+              upper: [series],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'series',
+              lower: [series],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'series',
+              lower: [series],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'series',
+              lower: [],
+              upper: [series],
+              includeUpper: false,
+            ));
+      }
     });
   }
 
@@ -1141,6 +1234,152 @@ extension M3UItemQueryFilter
     });
   }
 
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'series',
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'series',
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'series',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'series',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'series',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'series',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'series',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'series',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'series',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'series',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'series',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> seriesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'series',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<M3UItem, M3UItem, QAfterFilterCondition> titleIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1387,6 +1626,18 @@ extension M3UItemQuerySortBy on QueryBuilder<M3UItem, M3UItem, QSortBy> {
     });
   }
 
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> sortBySeries() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'series', Sort.asc);
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> sortBySeriesDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'series', Sort.desc);
+    });
+  }
+
   QueryBuilder<M3UItem, M3UItem, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1486,6 +1737,18 @@ extension M3UItemQuerySortThenBy
     });
   }
 
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> thenBySeries() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'series', Sort.asc);
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QAfterSortBy> thenBySeriesDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'series', Sort.desc);
+    });
+  }
+
   QueryBuilder<M3UItem, M3UItem, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -1538,6 +1801,13 @@ extension M3UItemQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'season', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<M3UItem, M3UItem, QDistinct> distinctBySeries(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'series', caseSensitive: caseSensitive);
     });
   }
 
@@ -1596,6 +1866,12 @@ extension M3UItemQueryProperty
   QueryBuilder<M3UItem, String?, QQueryOperations> seasonProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'season');
+    });
+  }
+
+  QueryBuilder<M3UItem, String?, QQueryOperations> seriesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'series');
     });
   }
 

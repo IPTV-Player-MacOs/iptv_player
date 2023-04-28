@@ -1,4 +1,4 @@
-import 'package:iptv_player/home/views/search_value_provider.dart';
+import 'package:iptv_player/home/provider/search_value_provider.dart';
 import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
 import 'package:iptv_player/service/collections/m3u/m3u_item.dart';
 import 'package:iptv_player/service/m3u_parse_service.dart';
@@ -59,6 +59,23 @@ Stream<List<M3UItem>> findAllSeries(FindAllSeriesRef ref) {
   final searchValue = ref.watch(seriesSearchValueProvider);
   final m3uService = ref.watch(m3uServiceProvider);
   return m3uService.findAllSeries(searchValue);
+}
+
+@riverpod
+Stream<List<M3UItem>> findAllItemsOfSeriesAndSeason(
+  FindAllItemsOfSeriesAndSeasonRef ref, {
+  required String series,
+  required String season,
+}) {
+  final m3uService = ref.watch(m3uServiceProvider);
+  return m3uService.findAllItemsOfSeriesAndSeason(series, season);
+}
+
+@riverpod
+Stream<List<M3UItem>> findAllSeasonsOfSeries(FindAllSeasonsOfSeriesRef ref,
+    {required String series}) {
+  final m3uService = ref.watch(m3uServiceProvider);
+  return m3uService.findAllSeasonsOfSeries(series);
 }
 
 @riverpod

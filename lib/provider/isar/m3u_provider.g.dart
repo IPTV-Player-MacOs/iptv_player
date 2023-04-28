@@ -177,6 +177,186 @@ final findAllSeriesProvider = AutoDisposeStreamProvider<List<M3UItem>>.internal(
 );
 
 typedef FindAllSeriesRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
+String _$findAllItemsOfSeriesAndSeasonHash() =>
+    r'e6592450023f174c9cb58919b999de284e7d025b';
+typedef FindAllItemsOfSeriesAndSeasonRef
+    = AutoDisposeStreamProviderRef<List<M3UItem>>;
+
+/// See also [findAllItemsOfSeriesAndSeason].
+@ProviderFor(findAllItemsOfSeriesAndSeason)
+const findAllItemsOfSeriesAndSeasonProvider =
+    FindAllItemsOfSeriesAndSeasonFamily();
+
+/// See also [findAllItemsOfSeriesAndSeason].
+class FindAllItemsOfSeriesAndSeasonFamily
+    extends Family<AsyncValue<List<M3UItem>>> {
+  /// See also [findAllItemsOfSeriesAndSeason].
+  const FindAllItemsOfSeriesAndSeasonFamily();
+
+  /// See also [findAllItemsOfSeriesAndSeason].
+  FindAllItemsOfSeriesAndSeasonProvider call({
+    required String series,
+    required String season,
+  }) {
+    return FindAllItemsOfSeriesAndSeasonProvider(
+      series: series,
+      season: season,
+    );
+  }
+
+  @override
+  FindAllItemsOfSeriesAndSeasonProvider getProviderOverride(
+    covariant FindAllItemsOfSeriesAndSeasonProvider provider,
+  ) {
+    return call(
+      series: provider.series,
+      season: provider.season,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'findAllItemsOfSeriesAndSeasonProvider';
+}
+
+/// See also [findAllItemsOfSeriesAndSeason].
+class FindAllItemsOfSeriesAndSeasonProvider
+    extends AutoDisposeStreamProvider<List<M3UItem>> {
+  /// See also [findAllItemsOfSeriesAndSeason].
+  FindAllItemsOfSeriesAndSeasonProvider({
+    required this.series,
+    required this.season,
+  }) : super.internal(
+          (ref) => findAllItemsOfSeriesAndSeason(
+            ref,
+            series: series,
+            season: season,
+          ),
+          from: findAllItemsOfSeriesAndSeasonProvider,
+          name: r'findAllItemsOfSeriesAndSeasonProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$findAllItemsOfSeriesAndSeasonHash,
+          dependencies: FindAllItemsOfSeriesAndSeasonFamily._dependencies,
+          allTransitiveDependencies:
+              FindAllItemsOfSeriesAndSeasonFamily._allTransitiveDependencies,
+        );
+
+  final String series;
+  final String season;
+
+  @override
+  bool operator ==(Object other) {
+    return other is FindAllItemsOfSeriesAndSeasonProvider &&
+        other.series == series &&
+        other.season == season;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, series.hashCode);
+    hash = _SystemHash.combine(hash, season.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$findAllSeasonsOfSeriesHash() =>
+    r'f0fe50bc33848f84f818ec6bd3439103297ff481';
+typedef FindAllSeasonsOfSeriesRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
+
+/// See also [findAllSeasonsOfSeries].
+@ProviderFor(findAllSeasonsOfSeries)
+const findAllSeasonsOfSeriesProvider = FindAllSeasonsOfSeriesFamily();
+
+/// See also [findAllSeasonsOfSeries].
+class FindAllSeasonsOfSeriesFamily extends Family<AsyncValue<List<M3UItem>>> {
+  /// See also [findAllSeasonsOfSeries].
+  const FindAllSeasonsOfSeriesFamily();
+
+  /// See also [findAllSeasonsOfSeries].
+  FindAllSeasonsOfSeriesProvider call({
+    required String series,
+  }) {
+    return FindAllSeasonsOfSeriesProvider(
+      series: series,
+    );
+  }
+
+  @override
+  FindAllSeasonsOfSeriesProvider getProviderOverride(
+    covariant FindAllSeasonsOfSeriesProvider provider,
+  ) {
+    return call(
+      series: provider.series,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'findAllSeasonsOfSeriesProvider';
+}
+
+/// See also [findAllSeasonsOfSeries].
+class FindAllSeasonsOfSeriesProvider
+    extends AutoDisposeStreamProvider<List<M3UItem>> {
+  /// See also [findAllSeasonsOfSeries].
+  FindAllSeasonsOfSeriesProvider({
+    required this.series,
+  }) : super.internal(
+          (ref) => findAllSeasonsOfSeries(
+            ref,
+            series: series,
+          ),
+          from: findAllSeasonsOfSeriesProvider,
+          name: r'findAllSeasonsOfSeriesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$findAllSeasonsOfSeriesHash,
+          dependencies: FindAllSeasonsOfSeriesFamily._dependencies,
+          allTransitiveDependencies:
+              FindAllSeasonsOfSeriesFamily._allTransitiveDependencies,
+        );
+
+  final String series;
+
+  @override
+  bool operator ==(Object other) {
+    return other is FindAllSeasonsOfSeriesProvider && other.series == series;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, series.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
 String _$findAllChannelsHash() => r'a72e466931455c4827e7548951fe75d24d897b76';
 
 /// See also [findAllChannels].

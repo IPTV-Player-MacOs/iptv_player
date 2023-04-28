@@ -15,6 +15,9 @@ class M3UItem {
   String? title;
 
   @Index(type: IndexType.hash)
+  String? series;
+
+  @Index(type: IndexType.hash)
   String? groupTitle;
 
   String? season;
@@ -28,7 +31,7 @@ class M3UItem {
 
   final iptvServer = IsarLink<IptvServer>();
 
-  M3UItem(this.link, this.duration, this.title, this.groupTitle,
+  M3UItem(this.link, this.duration, this.title, this.series, this.groupTitle,
       this.attributes, this.name, this.season, this.episode);
 }
 

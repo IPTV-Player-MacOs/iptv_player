@@ -50,13 +50,21 @@ class M3uListItem extends StatelessWidget {
                 const Icon(CupertinoIcons.exclamationmark_octagon),
           ),
         ),
-        SizedBox(
-          height: 30,
-          child: Text(
-            m3uItem.title ?? "",
-            style: MacosTheme.of(context).typography.body,
-          ),
-        )
+        m3uItem.name != M3UType.series
+            ? SizedBox(
+                height: 30,
+                child: Text(
+                  m3uItem.title ?? "",
+                  style: MacosTheme.of(context).typography.body,
+                ),
+              )
+            : SizedBox(
+                height: 30,
+                child: Text(
+                  "Episode ${m3uItem.episode}",
+                  style: MacosTheme.of(context).typography.body,
+                ),
+              )
       ]),
     );
   }

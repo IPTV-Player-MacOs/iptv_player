@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart' hide OverlayVisibilityMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iptv_player/home/views/search_value_provider.dart';
-import 'package:iptv_player/home/widgets/movie_list_item.dart';
+import 'package:iptv_player/home/provider/search_value_provider.dart';
+import 'package:iptv_player/home/widgets/series_list_item.dart';
 import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
 import 'package:iptv_player/provider/isar/m3u_provider.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class ChannelsPage extends ConsumerStatefulWidget {
-  const ChannelsPage({super.key});
+class SeriesPage extends ConsumerStatefulWidget {
+  const SeriesPage({super.key});
 
   @override
-  ConsumerState<ChannelsPage> createState() => _ChannelsPageState();
+  ConsumerState<SeriesPage> createState() => _SeriesPageState();
 }
 
-class _ChannelsPageState extends ConsumerState<ChannelsPage> {
+class _SeriesPageState extends ConsumerState<SeriesPage> {
   late TextEditingController searchController;
 
   int calculateCrossAxisCount(BuildContext context) {
@@ -35,20 +35,18 @@ class _ChannelsPageState extends ConsumerState<ChannelsPage> {
     searchController = TextEditingController()
       ..addListener(
         () => ref
-            .read(channelSearchValueProvider.notifier)
+            .read(seriesSearchValueProvider.notifier)
             .setValue(searchController.value.text),
       );
   }
 
   @override
   Widget build(BuildContext context) {
-    final seriesProvider = ref.watch(
-      findAllChannelsProvider,
-    );
+    final seriesProvider = ref.watch(findAllSeriesProvider);
 
     return MacosScaffold(
       toolBar: const ToolBar(
-        title: Text('Channels'),
+        title: Text('Series'),
       ),
       children: [
         ContentArea(
@@ -89,7 +87,7 @@ class _ChannelsPageState extends ConsumerState<ChannelsPage> {
                               mainAxisSpacing: 10,
                               childAspectRatio: (itemWidth / itemHeight),
                             ),
-                            itemBuilder: (_, index) => M3uListItem(
+                            itemBuilder: (_, index) => SeriesListItem(
                               movies[index],
                               height: itemHeight,
                             ),
@@ -101,7 +99,7 @@ class _ChannelsPageState extends ConsumerState<ChannelsPage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
-                                Text("No channels found"),
+                                Text("No series found"),
                               ],
                             ),
                           );

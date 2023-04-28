@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart' hide OverlayVisibilityMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iptv_player/home/views/search_value_provider.dart';
+import 'package:iptv_player/home/provider/search_value_provider.dart';
 import 'package:iptv_player/home/widgets/movie_list_item.dart';
 import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
 import 'package:iptv_player/provider/isar/m3u_provider.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class SeriesPage extends ConsumerStatefulWidget {
-  const SeriesPage({super.key});
+class ChannelsPage extends ConsumerStatefulWidget {
+  const ChannelsPage({super.key});
 
   @override
-  ConsumerState<SeriesPage> createState() => _SeriesPageState();
+  ConsumerState<ChannelsPage> createState() => _ChannelsPageState();
 }
 
-class _SeriesPageState extends ConsumerState<SeriesPage> {
+class _ChannelsPageState extends ConsumerState<ChannelsPage> {
   late TextEditingController searchController;
 
   int calculateCrossAxisCount(BuildContext context) {
@@ -35,18 +35,20 @@ class _SeriesPageState extends ConsumerState<SeriesPage> {
     searchController = TextEditingController()
       ..addListener(
         () => ref
-            .read(seriesSearchValueProvider.notifier)
+            .read(channelSearchValueProvider.notifier)
             .setValue(searchController.value.text),
       );
   }
 
   @override
   Widget build(BuildContext context) {
-    final seriesProvider = ref.watch(findAllSeriesProvider);
+    final seriesProvider = ref.watch(
+      findAllChannelsProvider,
+    );
 
     return MacosScaffold(
       toolBar: const ToolBar(
-        title: Text('Series'),
+        title: Text('Channels'),
       ),
       children: [
         ContentArea(
@@ -77,7 +79,7 @@ class _SeriesPageState extends ConsumerState<SeriesPage> {
                         final movies = moviesObj.value;
                         if (movies.isNotEmpty) {
                           var size = MediaQuery.of(context).size;
-                          final double itemHeight = (size.height) / 2;
+                          final double itemHeight = (size.height) / 1.5;
                           final double itemWidth = size.width / 2;
                           return GridView.builder(
                             gridDelegate:
@@ -99,7 +101,7 @@ class _SeriesPageState extends ConsumerState<SeriesPage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
-                                Text("No series found"),
+                                Text("No channels found"),
                               ],
                             ),
                           );
