@@ -90,17 +90,16 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     },
                     items: const [
                       SidebarItem(
-                        leading: MacosIcon(CupertinoIcons.home),
+                        leading: MacosIcon(CupertinoIcons.tv),
                         label: Text('Channels'),
                       ),
                       SidebarItem(
-                        leading: MacosIcon(CupertinoIcons.search),
+                        leading: MacosIcon(CupertinoIcons.film),
                         label: Text('Movies'),
                       ),
                       SidebarItem(
-                        leading: MacosIcon(CupertinoIcons.search),
+                        leading: MacosIcon(CupertinoIcons.film_fill),
                         label: Text('Series'),
-                        //Filter by /series/ im Link
                       ),
                     ],
                   );

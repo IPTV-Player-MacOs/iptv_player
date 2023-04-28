@@ -26,11 +26,13 @@ Future<void> main(List<String> args) async {
         ? const {}
         : jsonDecode(args[2]) as Map<String, dynamic>;
     if (arguments.containsValue('player')) {
-      final link = arguments['args1'];
+      final link = arguments['link'];
+      final isLive = arguments['isLive'];
       runApp(
         ProviderScope(
           child: VideoPlayer(
             videoUrl: link,
+            isLive: isLive,
             windowController: WindowController.fromWindowId(windowId),
             args: arguments,
           ),

@@ -17,7 +17,7 @@ final router = GoRouter(
           builder: (context, state) => const HomeView(),
         ),
         GoRoute(
-          path: 'player',
+          path: 'player/:isLive',
           builder: (context, state) {
             M3UItem item = state.extra as M3UItem;
             return VideoPlayerPage(videoUrl: item.link);

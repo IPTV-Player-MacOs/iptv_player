@@ -25,7 +25,8 @@ class M3uListItem extends StatelessWidget {
         final window = await DesktopMultiWindow.createWindow(jsonEncode(
           {
             'args0': 'player',
-            'args1': m3uItem.link,
+            'link': m3uItem.link,
+            'isLive': m3uItem.name == M3UType.channel,
           },
         ));
         debugPrint('$window');

@@ -147,7 +147,7 @@ class ClearDownloadAndPersistActivePlaylistItemsProvider
   }
 }
 
-String _$findAllMoviesHash() => r'e17ac5f9c7401e7dbd941345f0011f3cbeaa965c';
+String _$findAllMoviesHash() => r'43eeb72388b00fb35630e0a99c189542bd40cfa0';
 
 /// See also [findAllMovies].
 @ProviderFor(findAllMovies)
@@ -162,7 +162,7 @@ final findAllMoviesProvider = AutoDisposeStreamProvider<List<M3UItem>>.internal(
 );
 
 typedef FindAllMoviesRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
-String _$findAllSeriesHash() => r'7be2c5a3a4e4603f49debd771f0db2643178f16b';
+String _$findAllSeriesHash() => r'20e453241d2dedaae7ed959e944acc9ead262292';
 
 /// See also [findAllSeries].
 @ProviderFor(findAllSeries)
@@ -177,7 +177,7 @@ final findAllSeriesProvider = AutoDisposeStreamProvider<List<M3UItem>>.internal(
 );
 
 typedef FindAllSeriesRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
-String _$findAllChannelsHash() => r'47cd22279dea2d488d8ac142f9fcc91851b0886e';
+String _$findAllChannelsHash() => r'a72e466931455c4827e7548951fe75d24d897b76';
 
 /// See also [findAllChannels].
 @ProviderFor(findAllChannels)

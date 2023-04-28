@@ -1,3 +1,4 @@
+import 'package:iptv_player/home/views/search_value_provider.dart';
 import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
 import 'package:iptv_player/service/collections/m3u/m3u_item.dart';
 import 'package:iptv_player/service/m3u_parse_service.dart';
@@ -47,18 +48,22 @@ Future<bool> clearDownloadAndPersistActivePlaylistItems(
 
 @riverpod
 Stream<List<M3UItem>> findAllMovies(FindAllMoviesRef ref) {
+  final searchValue = ref.watch(movieSearchValueProvider);
+
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllMovies();
+  return m3uService.findAllMovies(searchValue);
 }
 
 @riverpod
 Stream<List<M3UItem>> findAllSeries(FindAllSeriesRef ref) {
+  final searchValue = ref.watch(seriesSearchValueProvider);
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllSeries();
+  return m3uService.findAllSeries(searchValue);
 }
 
 @riverpod
 Stream<List<M3UItem>> findAllChannels(FindAllChannelsRef ref) {
+  final searchValue = ref.watch(channelSearchValueProvider);
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllChannels();
+  return m3uService.findAllChannels(searchValue);
 }

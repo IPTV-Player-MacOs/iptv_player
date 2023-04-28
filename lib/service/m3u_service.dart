@@ -24,9 +24,13 @@ class M3uService {
     }).findAll();
   }
 
-  Stream<List<M3UItem>> findAllMovies() {
-    return isarService.isar.m3UItems
-        .filter()
+  Stream<List<M3UItem>> findAllMovies(String? searchValue) {
+    QueryBuilder<M3UItem, M3UItem, QFilterCondition> query =
+        isarService.isar.m3UItems.filter();
+    if (searchValue != null && searchValue.isNotEmpty) {
+      query = query.titleContains(searchValue, caseSensitive: false);
+    }
+    return query
         .iptvServer((q) {
           return q.idEqualTo(_activeIptvServer!.id);
         })
@@ -34,9 +38,13 @@ class M3uService {
         .watch(fireImmediately: true);
   }
 
-  Stream<List<M3UItem>> findAllSeries() {
-    return isarService.isar.m3UItems
-        .filter()
+  Stream<List<M3UItem>> findAllSeries(String? searchValue) {
+    QueryBuilder<M3UItem, M3UItem, QFilterCondition> query =
+        isarService.isar.m3UItems.filter();
+    if (searchValue != null && searchValue.isNotEmpty) {
+      query = query.titleContains(searchValue, caseSensitive: false);
+    }
+    return query
         .iptvServer((q) {
           return q.idEqualTo(_activeIptvServer!.id);
         })
@@ -44,9 +52,13 @@ class M3uService {
         .watch(fireImmediately: true);
   }
 
-  Stream<List<M3UItem>> findAllChannels() {
-    return isarService.isar.m3UItems
-        .filter()
+  Stream<List<M3UItem>> findAllChannels(String? searchValue) {
+    QueryBuilder<M3UItem, M3UItem, QFilterCondition> query =
+        isarService.isar.m3UItems.filter();
+    if (searchValue != null && searchValue.isNotEmpty) {
+      query = query.titleContains(searchValue, caseSensitive: false);
+    }
+    return query
         .iptvServer((q) {
           return q.idEqualTo(_activeIptvServer!.id);
         })
