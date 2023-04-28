@@ -8,28 +8,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iptv_player/provider/isar/isar_provider.dart';
 import 'package:iptv_player/router/router.dart';
 import 'package:iptv_player/service/collections/all_schemas.dart';
+import 'package:iptv_player/video_player/video_player.dart';
 import 'package:isar/isar.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'about/about_window.dart';
+import 'package:window_manager/window_manager.dart';
 
 Future<void> main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
+  await windowManager.ensureInitialized();
+
   if (args.firstOrNull == 'multi_window') {
     final windowId = int.parse(args[1]);
     final arguments = args[2].isEmpty
         ? const {}
         : jsonDecode(args[2]) as Map<String, dynamic>;
-    runApp(
-      ProviderScope(
-        child: AboutWindow(
-          windowController: WindowController.fromWindowId(windowId),
-          args: arguments,
+    if (arguments.containsValue('player')) {
+      final link = arguments['args1'];
+      runApp(
+        ProviderScope(
+          child: VideoPlayer(
+            videoUrl: link,
+            windowController: WindowController.fromWindowId(windowId),
+            args: arguments,
+          ),
         ),
-      ),
-    );
+      );
+    }
   } else {
-    WidgetsFlutterBinding.ensureInitialized();
     final dir = await getApplicationDocumentsDirectory();
     final isar = await Isar.open(allSchemas, directory: dir.path);
     runApp(

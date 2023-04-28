@@ -1,5 +1,18 @@
 import Cocoa
 import FlutterMacOS
+import Foundation
+
+import desktop_multi_window
+import isar_flutter_libs
+import macos_ui
+import media_kit_libs_macos_video
+import media_kit_video
+import path_provider_foundation
+import screen_retriever
+import sqflite
+import wakelock_macos
+import window_manager
+
 
 class BlurryContainerViewController: NSViewController {
   let flutterViewController = FlutterViewController()
@@ -64,6 +77,19 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
 
     RegisterGeneratedPlugins(registry: blurryContainerViewController.flutterViewController)
 
+    FlutterMultiWindowPlugin.setOnWindowCreatedCallback { controller in
+      FlutterMultiWindowPlugin.register(with: controller.registrar(forPlugin: "FlutterMultiWindowPlugin"))
+      IsarFlutterLibsPlugin.register(with: controller.registrar(forPlugin: "IsarFlutterLibsPlugin"))
+      MacOSUiPlugin.register(with: controller.registrar(forPlugin: "MacOSUiPlugin"))
+      MediaKitLibsMacosVideoPlugin.register(with: controller.registrar(forPlugin: "MediaKitLibsMacosVideoPlugin"))
+      MediaKitVideoPlugin.register(with: controller.registrar(forPlugin: "MediaKitVideoPlugin"))
+      PathProviderPlugin.register(with: controller.registrar(forPlugin: "PathProviderPlugin"))
+      ScreenRetrieverPlugin.register(with: controller.registrar(forPlugin: "ScreenRetrieverPlugin"))
+      SqflitePlugin.register(with: controller.registrar(forPlugin: "SqflitePlugin"))
+      WakelockMacosPlugin.register(with: controller.registrar(forPlugin: "WakelockMacosPlugin"))
+      WindowManagerPlugin.register(with: controller.registrar(forPlugin: "WindowManagerPlugin"))
+    }
+
     super.awakeFromNib()
   }
 
@@ -75,7 +101,7 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
   func windowWillEnterFullScreen(_ notification: Notification) {
       self.toolbar?.isVisible = false
   }
-  
+
   func windowDidExitFullScreen(_ notification: Notification) {
       self.toolbar?.isVisible = true
   }
