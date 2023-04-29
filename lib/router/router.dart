@@ -13,19 +13,20 @@ final router = GoRouter(
       builder: (context, state) => const IptvServerList(),
       routes: [
         GoRoute(
-            path: 'main',
-            builder: (context, state) => const HomeView(),
-            routes: [
-              GoRoute(
-                path: 'series',
-                builder: (context, state) {
-                  M3UItem item = state.extra as M3UItem;
-                  return SeriesSeasonPage(
-                    series: item.series!,
-                  );
-                },
-              ),
-            ]),
+          path: 'main',
+          builder: (context, state) => const HomeView(),
+          routes: [
+            GoRoute(
+              path: 'series',
+              builder: (context, state) {
+                M3UItem item = state.extra as M3UItem;
+                return SeriesSeasonPage(
+                  series: item.series!,
+                );
+              },
+            ),
+          ],
+        ),
       ],
     ),
   ],

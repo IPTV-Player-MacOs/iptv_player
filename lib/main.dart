@@ -13,12 +13,15 @@ import 'package:isar/isar.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:platform_builder/platform_builder.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
   await windowManager.ensureInitialized();
+
+  Platform.init(supportedPlatforms: {Platforms.macOS, Platforms.windows});
 
   if (args.firstOrNull == 'multi_window') {
     final windowId = int.parse(args[1]);
@@ -70,13 +73,23 @@ class _AppState extends ConsumerState<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MacosApp.router(
-      routerConfig: router,
-      title: 'iptv_player',
-      theme: MacosThemeData.light(),
-      darkTheme: MacosThemeData.dark(),
-      themeMode: material.ThemeMode.system,
-      debugShowCheckedModeBanner: false,
+    return PlatformBuilder(
+      macOSBuilder: (context) => MacosApp.router(
+        routerConfig: router,
+        title: 'iptv_player',
+        theme: MacosThemeData.light(),
+        darkTheme: MacosThemeData.dark(),
+        themeMode: material.ThemeMode.system,
+        debugShowCheckedModeBanner: false,
+      ),
+      windowsBuilder: (context) => material.MaterialApp.router(
+        routerConfig: router,
+        title: 'iptv_player',
+        theme: material.ThemeData.light(),
+        darkTheme: material.ThemeData.dark(),
+        themeMode: material.ThemeMode.system,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

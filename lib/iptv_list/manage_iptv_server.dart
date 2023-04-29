@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iptv_player/iptv_list/macOS/macos_mange_iptv_server_widget.dart';
 import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
-import 'package:macos_ui/macos_ui.dart';
+import 'package:platform_builder/platform_builder.dart';
 
 import '../service/collections/iptv_server/iptv_server.dart';
-import '../shared/macos_form_text_field.dart';
 import 'form/manage_iptv_server_form_state.dart';
 import 'form/name_input.dart';
 import 'form/url_input.dart';
@@ -103,75 +103,21 @@ class _ManageIptvServerItemState extends ConsumerState<ManageIptvServerItem> {
 
   @override
   Widget build(BuildContext context) {
-    return MacosScaffold(
-      toolBar: const ToolBar(
-        title: Text('Create new IPTV-Server'),
-        titleWidth: 200,
+    return PlatformBuilder(
+      macOSBuilder: (context) => MacOSMangeIptvServerWidget(
+        formKey: _formKey,
+        state: _state,
+        nameController: _nameController,
+        urlController: _urlController,
+        onSubmit: _onSubmit,
       ),
-      children: [
-        ContentArea(
-          builder: (context, scrollController) {
-            return Center(
-              child: SizedBox(
-                width: 400,
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const MacosIcon(
-                        CupertinoIcons.add,
-                        size: 90,
-                      ),
-                      const SizedBox(
-                        height: 60,
-                      ),
-                      const Text('Add URL for IPTV playlist (.m3u8 or .ts)'),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      MacOsFormTextField(
-                        controller: _nameController,
-                        placeholder: 'Name',
-                        showError: _state.name.isPure ||
-                            (!_state.name.isPure && _state.name.isValid),
-                        errorText: _state.name.displayError?.text(),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      MacOsFormTextField(
-                        controller: _urlController,
-                        placeholder: 'URL',
-                        showError: _state.url.isPure ||
-                            (!_state.url.isPure && _state.url.isValid),
-                        errorText: _state.url.displayError?.text(),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      MacosIconButton(
-                        icon: Icon(
-                          CupertinoIcons.arrow_right_circle_fill,
-                          color: _state.isNotValid
-                              ? CupertinoColors.inactiveGray
-                              : null,
-                          size: 30,
-                        ),
-                        boxConstraints:
-                            BoxConstraints.tight(const Size.square(60)),
-                        shape: BoxShape.circle,
-                        disabledColor: CupertinoColors.lightBackgroundGray,
-                        onPressed: _state.isValid ? () => _onSubmit() : null,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ],
+      windowsBuilder: (context) => MacOSMangeIptvServerWidget(
+        formKey: _formKey,
+        state: _state,
+        nameController: _nameController,
+        urlController: _urlController,
+        onSubmit: _onSubmit,
+      ),
     );
   }
 

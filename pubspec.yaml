@@ -37,9 +37,10 @@ dependencies:
   m3u_parser_nullsafe: ^1.0.3
   riverpod_annotation: ^2.1.1
   path_provider: ^2.0.14
+  platform_builder: ^3.0.0
   formz: ^0.6.0
   http: ^0.13.5
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.2.3 # replace with fast_cached_network_image
   intl: ^0.18.1
   window_manager: ^0.3.2
 
