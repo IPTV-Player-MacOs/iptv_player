@@ -9,7 +9,6 @@ import media_kit_libs_macos_video
 import media_kit_video
 import path_provider_foundation
 import screen_retriever
-import sqflite
 import wakelock_macos
 import window_manager
 
@@ -85,7 +84,6 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
       MediaKitVideoPlugin.register(with: controller.registrar(forPlugin: "MediaKitVideoPlugin"))
       PathProviderPlugin.register(with: controller.registrar(forPlugin: "PathProviderPlugin"))
       ScreenRetrieverPlugin.register(with: controller.registrar(forPlugin: "ScreenRetrieverPlugin"))
-      SqflitePlugin.register(with: controller.registrar(forPlugin: "SqflitePlugin"))
       WakelockMacosPlugin.register(with: controller.registrar(forPlugin: "WakelockMacosPlugin"))
       WindowManagerPlugin.register(with: controller.registrar(forPlugin: "WindowManagerPlugin"))
     }

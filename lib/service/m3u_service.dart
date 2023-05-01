@@ -42,6 +42,7 @@ class M3uService {
       String series, String season) {
     return isarService.isar.m3UItems
         .filter()
+        .nameEqualTo(M3UType.series)
         .seriesEqualTo(series)
         .seasonEqualTo(season)
         .watch(fireImmediately: true);
@@ -51,6 +52,7 @@ class M3uService {
     return isarService.isar.m3UItems
         .where(distinct: true)
         .filter()
+        .nameEqualTo(M3UType.series)
         .seriesEqualTo(series)
         .distinctBySeason()
         .watch(fireImmediately: true);
@@ -61,6 +63,7 @@ class M3uService {
       return isarService.isar.m3UItems
           .where(distinct: true)
           .filter()
+          .nameEqualTo(M3UType.series)
           .seriesContains(searchValue, caseSensitive: false)
           .sortBySeries()
           .distinctBySeries()
@@ -68,6 +71,8 @@ class M3uService {
     } else {
       return isarService.isar.m3UItems
           .where(distinct: true)
+          .filter()
+          .nameEqualTo(M3UType.series)
           .sortBySeries()
           .distinctBySeries()
           .watch(fireImmediately: true);

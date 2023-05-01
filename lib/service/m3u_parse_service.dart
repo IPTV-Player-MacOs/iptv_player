@@ -31,9 +31,9 @@ class M3uParseService {
           var tvgName = e.attributes['tvg-name'];
           var tvgLogo = e.attributes['tvg-logo'];
           var groupTitle = e.attributes['group-title'];
-          var season;
-          var episode;
-          var series;
+          String? season;
+          String? episode;
+          String? series;
           M3UType category = M3UType.channel;
           if (e.link.contains('movie')) {
             category = M3UType.movie;

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:desktop_multi_window/desktop_multi_window.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,6 +46,12 @@ Future<void> main(List<String> args) async {
   } else {
     final dir = await getApplicationDocumentsDirectory();
     final isar = await Isar.open(allSchemas, directory: dir.path);
+
+    await FastCachedImageConfig.init(
+      subDir: dir.path,
+      clearCacheAfter: const Duration(days: 15),
+    );
+
     runApp(
       ProviderScope(
         child: App(
