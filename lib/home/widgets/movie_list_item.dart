@@ -66,6 +66,7 @@ class _M3uListItemState extends State<M3uListItem> {
                   top: Radius.circular(10),
                 ),
                 child: FastCachedImage(
+                  fit: BoxFit.fitHeight,
                   url: widget.m3uItem.attributes?.tvgLogo ??
                       "https://placehold.co/600x400",
                   loadingBuilder: (context, progress) {

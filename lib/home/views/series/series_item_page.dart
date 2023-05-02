@@ -63,6 +63,7 @@ class _SeriesItemPageState extends ConsumerState<SeriesItemPage> {
                     final double itemHeight = (size.height) / 1.5;
                     final double itemWidth = size.width / 2;
                     return GridView.builder(
+                      controller: scrollController,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: calculateCrossAxisCount(context),
                         crossAxisSpacing: 10,

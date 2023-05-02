@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:iptv_player/home/views/channels/channels_page.dart';
 import 'package:iptv_player/home/views/movies/movie_page.dart';
@@ -17,7 +18,7 @@ class HomeView extends ConsumerStatefulWidget {
 }
 
 class _HomeViewState extends ConsumerState<HomeView> {
-  int _pageIndex = 0;
+  int _categoryIndex = 0;
 
   @override
   void initState() {
@@ -32,6 +33,20 @@ class _HomeViewState extends ConsumerState<HomeView> {
             return MacosWindow(
               sidebar: Sidebar(
                 minWidth: 200,
+                top: Row(
+                  children: [
+                    MacosBackButton(
+                      onPressed: () => context.pop(),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Back",
+                      style: MacosTheme.of(context).typography.headline,
+                    ),
+                  ],
+                ),
                 bottom: Column(
                   children: [
                     ref.watch(activeIptvServerProvider).when(
@@ -85,9 +100,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 builder: (context, scrollController) {
                   return SidebarItems(
                     scrollController: scrollController,
-                    currentIndex: _pageIndex,
-                    onChanged: (index) {
-                      setState(() => _pageIndex = index);
+                    currentIndex: _categoryIndex,
+                    onChanged: (categoryIndex) {
+                      setState(() => _categoryIndex = categoryIndex);
                     },
                     items: const [
                       SidebarItem(
@@ -107,7 +122,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 },
               ),
               child: IndexedStack(
-                index: _pageIndex,
+                index: _categoryIndex,
                 children: const [
                   ChannelsPage(),
                   MoviesPage(),

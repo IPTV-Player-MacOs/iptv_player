@@ -79,11 +79,25 @@ class M3uService {
     }
   }
 
-  Stream<List<M3UItem>> findAllChannels(String? searchValue) {
+  Stream<List<M3UItem>> findAllChannelGroups() {
+    return isarService.isar.m3UItems
+        .where(distinct: true)
+        .filter()
+        .nameEqualTo(M3UType.channel)
+        .sortByGroupTitle()
+        .distinctByGroupTitle()
+        .watch(fireImmediately: true);
+  }
+
+  Stream<List<M3UItem>> findAllChannels(
+      String? searchValue, String? groupTitle) {
     QueryBuilder<M3UItem, M3UItem, QFilterCondition> query =
         isarService.isar.m3UItems.filter();
     if (searchValue != null && searchValue.isNotEmpty) {
       query = query.titleContains(searchValue, caseSensitive: false);
+    }
+    if (groupTitle != null && groupTitle.isNotEmpty) {
+      query = query.groupTitleEqualTo(groupTitle);
     }
     return query
         .iptvServer((q) {

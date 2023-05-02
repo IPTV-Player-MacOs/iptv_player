@@ -46,6 +46,7 @@ class _SeriesListItemState extends State<SeriesListItem> {
                   top: Radius.circular(10),
                 ),
                 child: FastCachedImage(
+                  fit: BoxFit.fitHeight,
                   url: widget.m3uItem.attributes?.tvgLogo ??
                       "https://placehold.co/600x400",
                   loadingBuilder: (context, progress) {

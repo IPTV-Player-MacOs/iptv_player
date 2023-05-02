@@ -357,20 +357,120 @@ class FindAllSeasonsOfSeriesProvider
   }
 }
 
-String _$findAllChannelsHash() => r'a72e466931455c4827e7548951fe75d24d897b76';
+String _$findAllChannelsHash() => r'bf243895a58df86515a51d6a5c73829028507404';
+typedef FindAllChannelsRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
 
 /// See also [findAllChannels].
 @ProviderFor(findAllChannels)
-final findAllChannelsProvider =
+const findAllChannelsProvider = FindAllChannelsFamily();
+
+/// See also [findAllChannels].
+class FindAllChannelsFamily extends Family<AsyncValue<List<M3UItem>>> {
+  /// See also [findAllChannels].
+  const FindAllChannelsFamily();
+
+  /// See also [findAllChannels].
+  FindAllChannelsProvider call({
+    String? groupTitle,
+  }) {
+    return FindAllChannelsProvider(
+      groupTitle: groupTitle,
+    );
+  }
+
+  @override
+  FindAllChannelsProvider getProviderOverride(
+    covariant FindAllChannelsProvider provider,
+  ) {
+    return call(
+      groupTitle: provider.groupTitle,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'findAllChannelsProvider';
+}
+
+/// See also [findAllChannels].
+class FindAllChannelsProvider extends AutoDisposeStreamProvider<List<M3UItem>> {
+  /// See also [findAllChannels].
+  FindAllChannelsProvider({
+    this.groupTitle,
+  }) : super.internal(
+          (ref) => findAllChannels(
+            ref,
+            groupTitle: groupTitle,
+          ),
+          from: findAllChannelsProvider,
+          name: r'findAllChannelsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$findAllChannelsHash,
+          dependencies: FindAllChannelsFamily._dependencies,
+          allTransitiveDependencies:
+              FindAllChannelsFamily._allTransitiveDependencies,
+        );
+
+  final String? groupTitle;
+
+  @override
+  bool operator ==(Object other) {
+    return other is FindAllChannelsProvider && other.groupTitle == groupTitle;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, groupTitle.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$findAllChannelGroupsHash() =>
+    r'b4008ae7526be2cf26c3d69c42741515d985cdae';
+
+/// See also [findAllChannelGroups].
+@ProviderFor(findAllChannelGroups)
+final findAllChannelGroupsProvider =
     AutoDisposeStreamProvider<List<M3UItem>>.internal(
-  findAllChannels,
-  name: r'findAllChannelsProvider',
+  findAllChannelGroups,
+  name: r'findAllChannelGroupsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$findAllChannelsHash,
+      : _$findAllChannelGroupsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef FindAllChannelsRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
+typedef FindAllChannelGroupsRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
+String _$selectedChannelCategoryHash() =>
+    r'76b7dd9a408a2a297b6c09798be924abac2b1fca';
+
+/// See also [SelectedChannelCategory].
+@ProviderFor(SelectedChannelCategory)
+final selectedChannelCategoryProvider =
+    AutoDisposeNotifierProvider<SelectedChannelCategory, String?>.internal(
+  SelectedChannelCategory.new,
+  name: r'selectedChannelCategoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedChannelCategoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SelectedChannelCategory = AutoDisposeNotifier<String?>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

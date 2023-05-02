@@ -79,8 +79,23 @@ Stream<List<M3UItem>> findAllSeasonsOfSeries(FindAllSeasonsOfSeriesRef ref,
 }
 
 @riverpod
-Stream<List<M3UItem>> findAllChannels(FindAllChannelsRef ref) {
+Stream<List<M3UItem>> findAllChannels(FindAllChannelsRef ref,
+    {String? groupTitle}) {
   final searchValue = ref.watch(channelSearchValueProvider);
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllChannels(searchValue);
+  return m3uService.findAllChannels(searchValue, groupTitle);
+}
+
+@riverpod
+Stream<List<M3UItem>> findAllChannelGroups(FindAllChannelGroupsRef ref) {
+  final m3uService = ref.watch(m3uServiceProvider);
+  return m3uService.findAllChannelGroups();
+}
+
+@riverpod
+class SelectedChannelCategory extends _$SelectedChannelCategory {
+  @override
+  String? build() {
+    return null;
+  }
 }

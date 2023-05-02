@@ -77,9 +77,10 @@ class _MoviesPageState extends ConsumerState<MoviesPage> {
                         final movies = moviesObj.value;
                         if (movies.isNotEmpty) {
                           var size = MediaQuery.of(context).size;
-                          final double itemHeight = (size.height) / 1.5;
+                          final double itemHeight = (size.height) / 1;
                           final double itemWidth = size.width / 2;
                           return GridView.builder(
+                            controller: scrollController,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: calculateCrossAxisCount(context),
