@@ -13,7 +13,7 @@ void main() {
   testWidgets('App is built with a MacosWindow parent widget',
       (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(App());
+    await tester.pumpWidget(const App());
 
     expect(find.byType(MacosWindow), findsOneWidget);
   });

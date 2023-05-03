@@ -24,17 +24,30 @@ class M3uService {
     }).findAll();
   }
 
-  Stream<List<M3UItem>> findAllMovies(String? searchValue) {
+  Stream<List<M3UItem>> findAllMovies(String? searchValue, String? groupTitle) {
     QueryBuilder<M3UItem, M3UItem, QFilterCondition> query =
         isarService.isar.m3UItems.filter();
     if (searchValue != null && searchValue.isNotEmpty) {
       query = query.titleContains(searchValue, caseSensitive: false);
+    }
+    if (groupTitle != null && groupTitle.isNotEmpty) {
+      query = query.groupTitleEqualTo(groupTitle);
     }
     return query
         .iptvServer((q) {
           return q.idEqualTo(_activeIptvServer!.id);
         })
         .nameEqualTo(M3UType.movie)
+        .watch(fireImmediately: true);
+  }
+
+  Stream<List<M3UItem>> findAllMovieGroups() {
+    return isarService.isar.m3UItems
+        .where(distinct: true)
+        .filter()
+        .nameEqualTo(M3UType.movie)
+        .sortByGroupTitle()
+        .distinctByGroupTitle()
         .watch(fireImmediately: true);
   }
 
@@ -58,25 +71,25 @@ class M3uService {
         .watch(fireImmediately: true);
   }
 
-  Stream<List<M3UItem>> findAllSeries(String? searchValue) {
+  Stream<List<M3UItem>> findAllSeries(String? searchValue, String? groupTitle) {
+    var query = isarService.isar.m3UItems.filter().nameEqualTo(M3UType.series);
     if (searchValue != null && searchValue.isNotEmpty) {
-      return isarService.isar.m3UItems
-          .where(distinct: true)
-          .filter()
-          .nameEqualTo(M3UType.series)
-          .seriesContains(searchValue, caseSensitive: false)
-          .sortBySeries()
-          .distinctBySeries()
-          .watch(fireImmediately: true);
-    } else {
-      return isarService.isar.m3UItems
-          .where(distinct: true)
-          .filter()
-          .nameEqualTo(M3UType.series)
-          .sortBySeries()
-          .distinctBySeries()
-          .watch(fireImmediately: true);
+      query = query.seriesContains(searchValue, caseSensitive: false);
     }
+    if (groupTitle != null && groupTitle.isNotEmpty) {
+      query = query.groupTitleEqualTo(groupTitle);
+    }
+    return query.sortBySeries().distinctBySeries().watch(fireImmediately: true);
+  }
+
+  Stream<List<M3UItem>> findAllSeriesGroups() {
+    return isarService.isar.m3UItems
+        .where(distinct: true)
+        .filter()
+        .nameEqualTo(M3UType.series)
+        .sortByGroupTitle()
+        .distinctByGroupTitle()
+        .watch(fireImmediately: true);
   }
 
   Stream<List<M3UItem>> findAllChannelGroups() {

@@ -33,19 +33,22 @@ class _HomeViewState extends ConsumerState<HomeView> {
             return MacosWindow(
               sidebar: Sidebar(
                 minWidth: 200,
-                top: Row(
-                  children: [
-                    MacosBackButton(
-                      onPressed: () => context.pop(),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Back",
-                      style: MacosTheme.of(context).typography.headline,
-                    ),
-                  ],
+                top: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      MacosBackButton(
+                        onPressed: () => context.pop(),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Back",
+                        style: MacosTheme.of(context).typography.headline,
+                      ),
+                    ],
+                  ),
                 ),
                 bottom: Column(
                   children: [

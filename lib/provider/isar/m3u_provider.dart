@@ -47,18 +47,26 @@ Future<bool> clearDownloadAndPersistActivePlaylistItems(
 }
 
 @riverpod
-Stream<List<M3UItem>> findAllMovies(FindAllMoviesRef ref) {
+Stream<List<M3UItem>> findAllMovies(FindAllMoviesRef ref,
+    {String? groupTitle}) {
   final searchValue = ref.watch(movieSearchValueProvider);
 
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllMovies(searchValue);
+  return m3uService.findAllMovies(searchValue, groupTitle);
 }
 
 @riverpod
-Stream<List<M3UItem>> findAllSeries(FindAllSeriesRef ref) {
+Stream<List<M3UItem>> findAllSeries(FindAllSeriesRef ref,
+    {String? groupTitle}) {
   final searchValue = ref.watch(seriesSearchValueProvider);
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllSeries(searchValue);
+  return m3uService.findAllSeries(searchValue, groupTitle);
+}
+
+@riverpod
+Stream<List<M3UItem>> findAllSeriesGroups(FindAllSeriesGroupsRef ref) {
+  final m3uService = ref.watch(m3uServiceProvider);
+  return m3uService.findAllSeriesGroups();
 }
 
 @riverpod
@@ -93,9 +101,7 @@ Stream<List<M3UItem>> findAllChannelGroups(FindAllChannelGroupsRef ref) {
 }
 
 @riverpod
-class SelectedChannelCategory extends _$SelectedChannelCategory {
-  @override
-  String? build() {
-    return null;
-  }
+Stream<List<M3UItem>> findAllMovieGroups(FindAllMovieGroupsRef ref) {
+  final m3uService = ref.watch(m3uServiceProvider);
+  return m3uService.findAllMovieGroups();
 }

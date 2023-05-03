@@ -147,36 +147,187 @@ class ClearDownloadAndPersistActivePlaylistItemsProvider
   }
 }
 
-String _$findAllMoviesHash() => r'43eeb72388b00fb35630e0a99c189542bd40cfa0';
+String _$findAllMoviesHash() => r'099b9e5d46b2d364154cd037258177ef6922e03a';
+typedef FindAllMoviesRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
 
 /// See also [findAllMovies].
 @ProviderFor(findAllMovies)
-final findAllMoviesProvider = AutoDisposeStreamProvider<List<M3UItem>>.internal(
-  findAllMovies,
-  name: r'findAllMoviesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$findAllMoviesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const findAllMoviesProvider = FindAllMoviesFamily();
 
-typedef FindAllMoviesRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
-String _$findAllSeriesHash() => r'20e453241d2dedaae7ed959e944acc9ead262292';
+/// See also [findAllMovies].
+class FindAllMoviesFamily extends Family<AsyncValue<List<M3UItem>>> {
+  /// See also [findAllMovies].
+  const FindAllMoviesFamily();
+
+  /// See also [findAllMovies].
+  FindAllMoviesProvider call({
+    String? groupTitle,
+  }) {
+    return FindAllMoviesProvider(
+      groupTitle: groupTitle,
+    );
+  }
+
+  @override
+  FindAllMoviesProvider getProviderOverride(
+    covariant FindAllMoviesProvider provider,
+  ) {
+    return call(
+      groupTitle: provider.groupTitle,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'findAllMoviesProvider';
+}
+
+/// See also [findAllMovies].
+class FindAllMoviesProvider extends AutoDisposeStreamProvider<List<M3UItem>> {
+  /// See also [findAllMovies].
+  FindAllMoviesProvider({
+    this.groupTitle,
+  }) : super.internal(
+          (ref) => findAllMovies(
+            ref,
+            groupTitle: groupTitle,
+          ),
+          from: findAllMoviesProvider,
+          name: r'findAllMoviesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$findAllMoviesHash,
+          dependencies: FindAllMoviesFamily._dependencies,
+          allTransitiveDependencies:
+              FindAllMoviesFamily._allTransitiveDependencies,
+        );
+
+  final String? groupTitle;
+
+  @override
+  bool operator ==(Object other) {
+    return other is FindAllMoviesProvider && other.groupTitle == groupTitle;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, groupTitle.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$findAllSeriesHash() => r'5cbbf5506bbd4cffb7a8423df9c0c15c102f84f6';
+typedef FindAllSeriesRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
 
 /// See also [findAllSeries].
 @ProviderFor(findAllSeries)
-final findAllSeriesProvider = AutoDisposeStreamProvider<List<M3UItem>>.internal(
-  findAllSeries,
-  name: r'findAllSeriesProvider',
+const findAllSeriesProvider = FindAllSeriesFamily();
+
+/// See also [findAllSeries].
+class FindAllSeriesFamily extends Family<AsyncValue<List<M3UItem>>> {
+  /// See also [findAllSeries].
+  const FindAllSeriesFamily();
+
+  /// See also [findAllSeries].
+  FindAllSeriesProvider call({
+    String? groupTitle,
+  }) {
+    return FindAllSeriesProvider(
+      groupTitle: groupTitle,
+    );
+  }
+
+  @override
+  FindAllSeriesProvider getProviderOverride(
+    covariant FindAllSeriesProvider provider,
+  ) {
+    return call(
+      groupTitle: provider.groupTitle,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'findAllSeriesProvider';
+}
+
+/// See also [findAllSeries].
+class FindAllSeriesProvider extends AutoDisposeStreamProvider<List<M3UItem>> {
+  /// See also [findAllSeries].
+  FindAllSeriesProvider({
+    this.groupTitle,
+  }) : super.internal(
+          (ref) => findAllSeries(
+            ref,
+            groupTitle: groupTitle,
+          ),
+          from: findAllSeriesProvider,
+          name: r'findAllSeriesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$findAllSeriesHash,
+          dependencies: FindAllSeriesFamily._dependencies,
+          allTransitiveDependencies:
+              FindAllSeriesFamily._allTransitiveDependencies,
+        );
+
+  final String? groupTitle;
+
+  @override
+  bool operator ==(Object other) {
+    return other is FindAllSeriesProvider && other.groupTitle == groupTitle;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, groupTitle.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$findAllSeriesGroupsHash() =>
+    r'f1a73b099aeea3cb0d303307b40b216da11632bc';
+
+/// See also [findAllSeriesGroups].
+@ProviderFor(findAllSeriesGroups)
+final findAllSeriesGroupsProvider =
+    AutoDisposeStreamProvider<List<M3UItem>>.internal(
+  findAllSeriesGroups,
+  name: r'findAllSeriesGroupsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$findAllSeriesHash,
+      : _$findAllSeriesGroupsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef FindAllSeriesRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
+typedef FindAllSeriesGroupsRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
 String _$findAllItemsOfSeriesAndSeasonHash() =>
     r'e6592450023f174c9cb58919b999de284e7d025b';
 typedef FindAllItemsOfSeriesAndSeasonRef
@@ -456,21 +607,21 @@ final findAllChannelGroupsProvider =
 );
 
 typedef FindAllChannelGroupsRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
-String _$selectedChannelCategoryHash() =>
-    r'76b7dd9a408a2a297b6c09798be924abac2b1fca';
+String _$findAllMovieGroupsHash() =>
+    r'58e7d7e4e3119580014e27d46aa78510d7ff6f6c';
 
-/// See also [SelectedChannelCategory].
-@ProviderFor(SelectedChannelCategory)
-final selectedChannelCategoryProvider =
-    AutoDisposeNotifierProvider<SelectedChannelCategory, String?>.internal(
-  SelectedChannelCategory.new,
-  name: r'selectedChannelCategoryProvider',
+/// See also [findAllMovieGroups].
+@ProviderFor(findAllMovieGroups)
+final findAllMovieGroupsProvider =
+    AutoDisposeStreamProvider<List<M3UItem>>.internal(
+  findAllMovieGroups,
+  name: r'findAllMovieGroupsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$selectedChannelCategoryHash,
+      : _$findAllMovieGroupsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SelectedChannelCategory = AutoDisposeNotifier<String?>;
+typedef FindAllMovieGroupsRef = AutoDisposeStreamProviderRef<List<M3UItem>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

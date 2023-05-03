@@ -69,7 +69,11 @@ class _ChannelsPageState extends ConsumerState<ChannelsPage> {
                   dragClosed: false,
                   minWidth: 200,
                   maxWidth: 200,
-                  top: const Text("Categories"),
+                  topOffset: 0,
+                  top: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("Categories"),
+                  ),
                   builder: (context, scrollController) {
                     return ref.watch(findAllChannelGroupsProvider).when(
                           data: (data) => SidebarItems(
@@ -91,7 +95,9 @@ class _ChannelsPageState extends ConsumerState<ChannelsPage> {
                               ),
                               for (var item in data)
                                 SidebarItem(
-                                  label: Text("${item.groupTitle}"),
+                                  label: Flexible(
+                                    child: Text("${item.groupTitle}"),
+                                  ),
                                 )
                             ],
                           ),
