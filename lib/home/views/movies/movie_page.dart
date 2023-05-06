@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart' hide OverlayVisibilityMode;
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iptv_player/home/provider/search_value_provider.dart';
 import 'package:iptv_player/home/widgets/movie_list_item.dart';
 import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
 import 'package:iptv_player/provider/isar/m3u_provider.dart';
 import 'package:macos_ui/macos_ui.dart';
+
+import '../../../theme.dart';
 
 class MoviesPage extends ConsumerStatefulWidget {
   const MoviesPage({super.key});
@@ -46,6 +49,8 @@ class _MoviesPageState extends ConsumerState<MoviesPage> {
   Widget build(BuildContext context) {
     final movieProvider =
         ref.watch(findAllMoviesProvider(groupTitle: _category));
+    final currentTheme = ref.watch(appThemeProvider);
+
     return MacosScaffold(
       toolBar: ToolBar(
         leading: MacosIconButton(
@@ -55,6 +60,21 @@ class _MoviesPageState extends ConsumerState<MoviesPage> {
           onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
         ),
         title: const Text('Home'),
+        actions: [
+          ToolBarIconButton(
+            label: currentTheme == ThemeMode.light ? "Dark Mode" : "Light Mode",
+            icon: const MacosIcon(
+              CupertinoIcons.color_filter,
+            ),
+            onPressed: () =>
+                ref.read(appThemeProvider.notifier).setAndPersistThemeMode(
+                      currentTheme == ThemeMode.light
+                          ? ThemeMode.dark
+                          : ThemeMode.light,
+                    ),
+            showLabel: true,
+          ),
+        ],
       ),
       children: [
         ContentArea(

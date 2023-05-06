@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart' hide OverlayVisibilityMode;
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iptv_player/home/provider/search_value_provider.dart';
 import 'package:iptv_player/home/widgets/series_list_item.dart';
 import 'package:iptv_player/provider/isar/iptv_server_provider.dart';
 import 'package:iptv_player/provider/isar/m3u_provider.dart';
 import 'package:macos_ui/macos_ui.dart';
+
+import '../../../theme.dart';
 
 class SeriesPage extends ConsumerStatefulWidget {
   const SeriesPage({super.key});
@@ -46,6 +49,7 @@ class _SeriesPageState extends ConsumerState<SeriesPage> {
   Widget build(BuildContext context) {
     final seriesProvider =
         ref.watch(findAllSeriesProvider(groupTitle: _category));
+    final currentTheme = ref.watch(appThemeProvider);
 
     return MacosScaffold(
       toolBar: ToolBar(
@@ -56,6 +60,20 @@ class _SeriesPageState extends ConsumerState<SeriesPage> {
           onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
         ),
         title: const Text('Series'),
+        actions: [
+          ToolBarIconButton(
+            label: currentTheme == ThemeMode.light ? "Dark Mode" : "Light Mode",
+            icon: const MacosIcon(
+              CupertinoIcons.color_filter,
+            ),
+            onPressed: () => ref
+                .read(appThemeProvider.notifier)
+                .setAndPersistThemeMode(currentTheme == ThemeMode.light
+                    ? ThemeMode.dark
+                    : ThemeMode.light),
+            showLabel: true,
+          ),
+        ],
       ),
       children: [
         ContentArea(

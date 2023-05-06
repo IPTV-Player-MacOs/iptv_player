@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iptv_player/theme.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import '../../provider/isar/iptv_server_provider.dart';
@@ -14,6 +15,7 @@ class MacOSIptvServerList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final serverItems$ = ref.watch(iptvServerItemsProvider);
+    final currentTheme = ref.watch(appThemeProvider);
     return MacosScaffold(
       toolBar: ToolBar(
         title: const Text('Playlists'),
@@ -28,6 +30,18 @@ class MacOSIptvServerList extends ConsumerWidget {
               context: context,
               builder: (_) => const MacosSheet(child: ManageIptvServerItem()),
             ),
+            showLabel: true,
+          ),
+          ToolBarIconButton(
+            label: currentTheme == ThemeMode.light ? "Dark Mode" : "Light Mode",
+            icon: const MacosIcon(
+              CupertinoIcons.color_filter,
+            ),
+            onPressed: () => ref
+                .read(appThemeProvider.notifier)
+                .setAndPersistThemeMode(currentTheme == ThemeMode.light
+                    ? ThemeMode.dark
+                    : ThemeMode.light),
             showLabel: true,
           ),
         ],

@@ -36,8 +36,8 @@ class _SeriesListItemState extends State<SeriesListItem> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: isHovering
-                ? CupertinoColors.systemGrey5
-                : CupertinoColors.white,
+                ? MacosTheme.of(context).dividerColor
+                : MacosTheme.of(context).canvasColor,
           ),
           child: Column(children: [
             Expanded(
