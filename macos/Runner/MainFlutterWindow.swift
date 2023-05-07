@@ -53,7 +53,8 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
     let blurryContainerViewController = BlurryContainerViewController()
     let windowFrame = self.frame
     self.contentViewController = blurryContainerViewController
-    self.setFrame(windowFrame, display: true)
+    self.setFrame(NSRect(x:0, y:0, width: 1440, height: 900), display: true)
+    self.center();
 
     if #available(macOS 10.13, *) {
       let customToolbar = NSToolbar()

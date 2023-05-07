@@ -24,9 +24,12 @@ class M3uService {
     }).findAll();
   }
 
-  Stream<List<M3UItem>> findAllMovies(String? searchValue, String? groupTitle) {
+  Stream<List<M3UItem>> findAllMovies(
+      IptvServer activeIptvServer, String? searchValue, String? groupTitle) {
     QueryBuilder<M3UItem, M3UItem, QFilterCondition> query =
-        isarService.isar.m3UItems.filter();
+        isarService.isar.m3UItems.filter().iptvServer((q) {
+      return q.idEqualTo(_activeIptvServer!.id);
+    });
     if (searchValue != null && searchValue.isNotEmpty) {
       query = query.titleContains(searchValue, caseSensitive: false);
     }
@@ -41,38 +44,51 @@ class M3uService {
         .watch(fireImmediately: true);
   }
 
-  Stream<List<M3UItem>> findAllMovieGroups() {
+  Stream<List<M3UItem>> findAllMovieGroups(IptvServer activeIptvServer) {
     return isarService.isar.m3UItems
         .where(distinct: true)
         .filter()
         .nameEqualTo(M3UType.movie)
+        .iptvServer((q) {
+          return q.idEqualTo(_activeIptvServer!.id);
+        })
         .sortByGroupTitle()
         .distinctByGroupTitle()
         .watch(fireImmediately: true);
   }
 
   Stream<List<M3UItem>> findAllItemsOfSeriesAndSeason(
-      String series, String season) {
+      IptvServer activeIptvServer, String series, String season) {
     return isarService.isar.m3UItems
         .filter()
+        .iptvServer((q) {
+          return q.idEqualTo(_activeIptvServer!.id);
+        })
         .nameEqualTo(M3UType.series)
         .seriesEqualTo(series)
         .seasonEqualTo(season)
         .watch(fireImmediately: true);
   }
 
-  Stream<List<M3UItem>> findAllSeasonsOfSeries(String series) {
+  Stream<List<M3UItem>> findAllSeasonsOfSeries(
+      IptvServer activeIptvServer, String series) {
     return isarService.isar.m3UItems
         .where(distinct: true)
         .filter()
+        .iptvServer((q) {
+          return q.idEqualTo(_activeIptvServer!.id);
+        })
         .nameEqualTo(M3UType.series)
         .seriesEqualTo(series)
         .distinctBySeason()
         .watch(fireImmediately: true);
   }
 
-  Stream<List<M3UItem>> findAllSeries(String? searchValue, String? groupTitle) {
-    var query = isarService.isar.m3UItems.filter().nameEqualTo(M3UType.series);
+  Stream<List<M3UItem>> findAllSeries(
+      IptvServer activeIptvServer, String? searchValue, String? groupTitle) {
+    var query = isarService.isar.m3UItems.filter().iptvServer((q) {
+      return q.idEqualTo(_activeIptvServer!.id);
+    }).nameEqualTo(M3UType.series);
     if (searchValue != null && searchValue.isNotEmpty) {
       query = query.seriesContains(searchValue, caseSensitive: false);
     }
@@ -82,21 +98,27 @@ class M3uService {
     return query.sortBySeries().distinctBySeries().watch(fireImmediately: true);
   }
 
-  Stream<List<M3UItem>> findAllSeriesGroups() {
+  Stream<List<M3UItem>> findAllSeriesGroups(IptvServer activeIptvServer) {
     return isarService.isar.m3UItems
         .where(distinct: true)
         .filter()
         .nameEqualTo(M3UType.series)
+        .iptvServer((q) {
+          return q.idEqualTo(_activeIptvServer!.id);
+        })
         .sortByGroupTitle()
         .distinctByGroupTitle()
         .watch(fireImmediately: true);
   }
 
-  Stream<List<M3UItem>> findAllChannelGroups() {
+  Stream<List<M3UItem>> findAllChannelGroups(IptvServer activeIptvServer) {
     return isarService.isar.m3UItems
         .where(distinct: true)
         .filter()
         .nameEqualTo(M3UType.channel)
+        .iptvServer((q) {
+          return q.idEqualTo(_activeIptvServer!.id);
+        })
         .sortByGroupTitle()
         .distinctByGroupTitle()
         .watch(fireImmediately: true);
@@ -120,11 +142,15 @@ class M3uService {
         .watch(fireImmediately: true);
   }
 
-  Future<List<M3UItem>> findByCategory(String category) async {
+  Future<List<M3UItem>> findByCategory(
+      String category, IptvServer activeIptvServer) async {
     return await isarService.isar.m3UItems
         .where()
         .groupTitleEqualTo(category)
-        .findAll();
+        .filter()
+        .iptvServer((q) {
+      return q.idEqualTo(_activeIptvServer!.id);
+    }).findAll();
   }
 
   Future<M3UItem?> findById(Id id) async {

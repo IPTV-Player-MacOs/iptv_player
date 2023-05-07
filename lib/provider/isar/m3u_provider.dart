@@ -50,9 +50,10 @@ Future<bool> clearDownloadAndPersistActivePlaylistItems(
 Stream<List<M3UItem>> findAllMovies(FindAllMoviesRef ref,
     {String? groupTitle}) {
   final searchValue = ref.watch(movieSearchValueProvider);
+  final activeIptvServer = ref.watch(m3uServiceProvider).getActiveIptvServer()!;
 
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllMovies(searchValue, groupTitle);
+  return m3uService.findAllMovies(activeIptvServer, searchValue, groupTitle);
 }
 
 @riverpod
@@ -60,13 +61,16 @@ Stream<List<M3UItem>> findAllSeries(FindAllSeriesRef ref,
     {String? groupTitle}) {
   final searchValue = ref.watch(seriesSearchValueProvider);
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllSeries(searchValue, groupTitle);
+  final activeIptvServer = m3uService.getActiveIptvServer()!;
+
+  return m3uService.findAllSeries(activeIptvServer, searchValue, groupTitle);
 }
 
 @riverpod
 Stream<List<M3UItem>> findAllSeriesGroups(FindAllSeriesGroupsRef ref) {
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllSeriesGroups();
+  final activeIptvServer = m3uService.getActiveIptvServer()!;
+  return m3uService.findAllSeriesGroups(activeIptvServer);
 }
 
 @riverpod
@@ -76,14 +80,19 @@ Stream<List<M3UItem>> findAllItemsOfSeriesAndSeason(
   required String season,
 }) {
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllItemsOfSeriesAndSeason(series, season);
+  final activeIptvServer = m3uService.getActiveIptvServer()!;
+
+  return m3uService.findAllItemsOfSeriesAndSeason(
+      activeIptvServer, series, season);
 }
 
 @riverpod
 Stream<List<M3UItem>> findAllSeasonsOfSeries(FindAllSeasonsOfSeriesRef ref,
     {required String series}) {
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllSeasonsOfSeries(series);
+  final activeIptvServer = m3uService.getActiveIptvServer()!;
+
+  return m3uService.findAllSeasonsOfSeries(activeIptvServer, series);
 }
 
 @riverpod
@@ -97,11 +106,13 @@ Stream<List<M3UItem>> findAllChannels(FindAllChannelsRef ref,
 @riverpod
 Stream<List<M3UItem>> findAllChannelGroups(FindAllChannelGroupsRef ref) {
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllChannelGroups();
+  final activeIptvServer = m3uService.getActiveIptvServer()!;
+  return m3uService.findAllChannelGroups(activeIptvServer);
 }
 
 @riverpod
 Stream<List<M3UItem>> findAllMovieGroups(FindAllMovieGroupsRef ref) {
   final m3uService = ref.watch(m3uServiceProvider);
-  return m3uService.findAllMovieGroups();
+  final activeIptvServer = m3uService.getActiveIptvServer()!;
+  return m3uService.findAllMovieGroups(activeIptvServer);
 }

@@ -24,6 +24,14 @@ Future<void> main(List<String> args) async {
   MediaKit.ensureInitialized();
   await windowManager.ensureInitialized();
 
+  WindowOptions windowOptions = const WindowOptions(
+    size: Size(1440, 900),
+    center: true,
+    backgroundColor: Colors.transparent,
+    skipTaskbar: false,
+    titleBarStyle: TitleBarStyle.hidden,
+  );
+
   Platform.init(supportedPlatforms: {Platforms.macOS, Platforms.windows});
 
   if (args.firstOrNull == 'multi_window') {
@@ -53,6 +61,11 @@ Future<void> main(List<String> args) async {
       subDir: dir.path,
       clearCacheAfter: const Duration(days: 15),
     );
+
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
 
     runApp(
       ProviderScope(

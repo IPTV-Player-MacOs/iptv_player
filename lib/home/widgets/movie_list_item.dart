@@ -67,8 +67,7 @@ class _M3uListItemState extends State<M3uListItem> {
                 ),
                 child: FastCachedImage(
                   fit: BoxFit.fitHeight,
-                  url: widget.m3uItem.attributes?.tvgLogo ??
-                      "https://placehold.co/600x400",
+                  url: widget.m3uItem.attributes?.tvgLogo ?? "",
                   loadingBuilder: (context, progress) {
                     return Center(
                       child: ProgressBar(
@@ -76,8 +75,10 @@ class _M3uListItemState extends State<M3uListItem> {
                       ),
                     );
                   },
-                  errorBuilder: (context, exception, stacktrace) =>
-                      const Icon(CupertinoIcons.exclamationmark_octagon),
+                  errorBuilder: (context, exception, stacktrace) => Image.asset(
+                    "assets/images/no_image_available.png",
+                    fit: BoxFit.fitHeight,
+                  ),
                 ),
               ),
             ),

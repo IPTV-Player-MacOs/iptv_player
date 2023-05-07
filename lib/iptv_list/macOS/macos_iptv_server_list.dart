@@ -12,6 +12,16 @@ import '../manage_iptv_server.dart';
 class MacOSIptvServerList extends ConsumerWidget {
   const MacOSIptvServerList({super.key});
 
+  String obscureUrl(String url) {
+    RegExp? exp = RegExp(r"^(https?://[^/]+)");
+    RegExpMatch? match = exp.firstMatch(url);
+    if (match != null) {
+      return "${match.group(1)}********";
+    } else {
+      return url;
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final serverItems$ = ref.watch(iptvServerItemsProvider);
@@ -92,7 +102,7 @@ class MacOSIptvServerList extends ConsumerWidget {
                                                 .title2,
                                           ),
                                           Text(
-                                            server.url,
+                                            obscureUrl(server.url),
                                             style: MacosTheme.of(context)
                                                 .typography
                                                 .caption1,
