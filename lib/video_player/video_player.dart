@@ -30,7 +30,7 @@ class _VideoPlayerState extends State<VideoPlayer> with WindowListener {
     ),
   );
   MediaKitController? mediaKitController;
-  VideoController? videoController;
+  late VideoController videoController;
 
   @override
   void initState() {
@@ -43,8 +43,8 @@ class _VideoPlayerState extends State<VideoPlayer> with WindowListener {
       allowedScreenSleep: false,
       isLive: widget.isLive,
     );
+    videoController = VideoController(player);
     Future.microtask(() async {
-      videoController = await VideoController.create(player);
       await player.open(
         Media(widget.videoUrl),
       );
@@ -57,7 +57,6 @@ class _VideoPlayerState extends State<VideoPlayer> with WindowListener {
     Future.microtask(() async {
       debugPrint('Disposing [Player] and [VideoController]...');
       await player.dispose();
-      await videoController?.dispose();
     });
     super.dispose();
   }
