@@ -2,7 +2,7 @@
 
 This is a highly optimized and efficient IPTV player application, written in Dart and optimized for macOS.
 
-![App Image](https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/logo/iptv_logo_2.png?token=GHSAT0AAAAAACD4GWZ7BRUWGH2FBQH2ZUNCZFEQJDA)
+<img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/logo/iptv_logo_2.png?token=GHSAT0AAAAAACD4GWZ7BRUWGH2FBQH2ZUNCZFEQJDA" width="300">
 
 ## Features :sparkles:
 
@@ -12,6 +12,10 @@ This is a highly optimized and efficient IPTV player application, written in Dar
 4. **No advertisements**: Enjoy an uninterrupted viewing experience.
 5. **Super-fast search**: Quickly find movies, series and channels.
 6. **Playback Functionality**: Playback occurs in a separate window.
+
+|                                                                                                                                                                   |                                                                                                                                                                   |                                                                                                                                                                   |
+|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/logo/iptv_logo_2.png?token=GHSAT0AAAAAACD4GWZ7BRUWGH2FBQH2ZUNCZFEQJDA" width="300"> | <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/logo/iptv_logo_2.png?token=GHSAT0AAAAAACD4GWZ7BRUWGH2FBQH2ZUNCZFEQJDA" width="300"> | <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/logo/iptv_logo_2.png?token=GHSAT0AAAAAACD4GWZ7BRUWGH2FBQH2ZUNCZFEQJDA" width="300"> |
 
 ## Getting Started :rocket:
 
