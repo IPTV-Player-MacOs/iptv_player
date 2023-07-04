@@ -2,7 +2,7 @@
 
 This is a highly optimized and efficient IPTV player application, written in Dart and optimized for macOS.
 
-<img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/logo/iptv_logo_2.png?token=GHSAT0AAAAAACD4GWZ7BRUWGH2FBQH2ZUNCZFEQJDA" width="300">
+<img src="https://raw.githubusercontent.com/IPTV-Player-MacOs/iptv_player/main/assets/logo/iptv_logo_2.png?token=GHSAT0AAAAAACD4GWZ7BRUWGH2FBQH2ZUNCZFEQJDA" width="300">
 
 ## Features :sparkles:
 
@@ -15,12 +15,12 @@ This is a highly optimized and efficient IPTV player application, written in Dar
 
 |                                               Server Overview                                                |                                             Channel Overview                                              |                                                   Dark Mode                                                   |
 |:------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------:|
-| <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/images/Multi_server_view.png"> | <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/images/Channels_view.png" > | <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/images/Channels_dark_mode.png"> |
+| <img src="https://raw.githubusercontent.com/IPTV-Player-MacOs/iptv_player/main/assets/images/Multi_server_view.png"> | <img src="https://raw.githubusercontent.com/IPTV-Player-MacOs/iptv_player/main/assets/images/Channels_view.png" > | <img src="https://raw.githubusercontent.com/IPTV-Player-MacOs/iptv_player/main/assets/images/Channels_dark_mode.png"> |
 
 ## Getting Started :rocket:
 
-1. Download the DMG installer from the release tab
-   here: [Download V1.0.0](https://github.com/pauli2406/iptv_player/releases/tag/v1.0.0)
+1. Download the DMG installer from the release tab 
+   here: [Download V1.0.0](https://github.com/IPTV-Player-MacOs/iptv_player/releases/tag/v1.0.0)
 2. After downloading, execute the DMG installer file.
 3. After executing the installer, a window will appear. Click `Continue` and follow the onscreen instructions.
 4. After installation, open the application.
