@@ -13,13 +13,14 @@ This is a highly optimized and efficient IPTV player application, written in Dar
 5. **Super-fast search**: Quickly find movies, series and channels.
 6. **Playback Functionality**: Playback occurs in a separate window.
 
-|                                                                                                                                                                   |                                                                                                                                                                   |                                                                                                                                                                   |
-|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/logo/iptv_logo_2.png?token=GHSAT0AAAAAACD4GWZ7BRUWGH2FBQH2ZUNCZFEQJDA" width="300"> | <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/logo/iptv_logo_2.png?token=GHSAT0AAAAAACD4GWZ7BRUWGH2FBQH2ZUNCZFEQJDA" width="300"> | <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/logo/iptv_logo_2.png?token=GHSAT0AAAAAACD4GWZ7BRUWGH2FBQH2ZUNCZFEQJDA" width="300"> |
+|                                                                        Server Overview                                                                        |                                                                      Channel Overview                                                                      |                                                                           Dark Mode                                                                            |
+|:-------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/images/Multi_server_view.png?token=GHSAT0AAAAAACD4GWZ7DRTCZK4SJVZHG2MQZFEQ3ZQ"> | <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/images/Channels_view.png?token=GHSAT0AAAAAACD4GWZ6ALPBCVT46C4UJRBKZFEQ3YQ" > | <img src="https://raw.githubusercontent.com/pauli2406/iptv_player/main/assets/images/Channels_dark_mode.png?token=GHSAT0AAAAAACD4GWZ7YTXDTNSE4MPRSSMSZFEQ3XA"> |
 
 ## Getting Started :rocket:
 
-1. Download the DMG installer from the release tab here:
+1. Download the DMG installer from the release tab
+   here: [Download V1.0.0](https://github.com/pauli2406/iptv_player/releases/tag/v1.0.0)
 2. After downloading, execute the DMG installer file.
 3. After executing the installer, a window will appear. Click `Continue` and follow the onscreen instructions.
 4. After installation, open the application.
