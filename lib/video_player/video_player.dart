@@ -2,7 +2,6 @@ import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
-import 'package:media_kit_video_controls/widgets/media_kit_player.dart';
 import 'package:window_manager/window_manager.dart';
 
 class VideoPlayer extends StatefulWidget {
@@ -29,20 +28,12 @@ class _VideoPlayerState extends State<VideoPlayer> with WindowListener {
       logLevel: MPVLogLevel.warn,
     ),
   );
-  MediaKitController? mediaKitController;
   late VideoController videoController;
 
   @override
   void initState() {
     super.initState();
     windowManager.addListener(this);
-    mediaKitController = MediaKitController(
-      player: player,
-      autoPlay: true,
-      looping: true,
-      allowedScreenSleep: false,
-      isLive: widget.isLive,
-    );
     videoController = VideoController(player);
     Future.microtask(() async {
       await player.open(
@@ -71,13 +62,7 @@ class _VideoPlayerState extends State<VideoPlayer> with WindowListener {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: FittedBox(
-          fit: BoxFit.fill,
-          child: MediaKitControls(
-            controller: mediaKitController!,
-            video: Video(controller: videoController),
-          ),
-        ),
+        body: Video(controller: videoController),
       ),
       debugShowCheckedModeBanner: false,
     );

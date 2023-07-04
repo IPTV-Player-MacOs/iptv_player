@@ -72,6 +72,7 @@ class MacOSMangeIptvServerWidget extends StatelessWidget {
                         height: 10,
                       ),
                       MacosIconButton(
+                        key: const Key('submit_button'),
                         icon: Icon(
                           CupertinoIcons.arrow_right_circle_fill,
                           color: state.isNotValid

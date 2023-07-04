@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   desktop_multi_window
   isar_flutter_libs
   media_kit_video
+  screen_brightness_windows
   screen_retriever
   window_manager
 )
